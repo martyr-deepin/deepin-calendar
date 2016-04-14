@@ -68,6 +68,7 @@ public slots:
 private:
     int getDateIndex(const QDate &date) const;
     const QString getCellDayNum(int pos);
+    const QDate getCellDate(int pos);
     const QString getLunar(int pos);
     const CaLunarDayInfo getCaLunarDayInfo(int pos) const;
     void paintCell(QWidget *cell);
@@ -92,19 +93,21 @@ private:
     QFont m_dayLunarFont;
 
     QColor m_topBorderColor = Qt::red;
-    QColor m_backgroundCircleColor = QColor(33, 147, 202);
+    QColor m_backgroundCircleColor = "#2ca7f8";
 
     QColor m_defaultTextColor = Qt::black;
-    QColor m_weekendsTextColor = Qt::gray;
+    QColor m_currentDayTextColor = "#2ca7f8";
+    QColor m_weekendsTextColor = Qt::black;
     QColor m_selectedTextColor = Qt::white;
-    QColor m_festivalTextColor = Qt::cyan;
-    QColor m_notCurrentTextColor = QColor(0x55, 0x55, 0x55);
+    QColor m_festivalTextColor = Qt::black;
+    QColor m_notCurrentTextColor = QColor::fromRgbF(0, 0, 0, 0.5);
 
-    QColor m_defaultLunarColor = Qt::black;
-    QColor m_weekendsLunarColor = Qt::gray;
+    QColor m_defaultLunarColor = "#5e5e5e";
+    QColor m_currentDayLunarColor = m_currentDayTextColor;
+    QColor m_weekendsLunarColor = m_defaultLunarColor;
     QColor m_selectedLunarColor = Qt::white;
-    QColor m_festivalLunarColor = Qt::cyan;
-    QColor m_notCurrentLunarColor = QColor(0x55, 0x55, 0x55);
+    QColor m_festivalLunarColor = m_defaultLunarColor;
+    QColor m_notCurrentLunarColor = QColor::fromRgbF(0.36, 0.36, 0.36, 0.5);
 
     static QQueue<int> *queue;
     static QMap<QDate, CaLunarDayInfo> *lunarCache;

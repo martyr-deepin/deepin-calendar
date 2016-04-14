@@ -21,3 +21,7 @@ SOURCES += main.cpp\
 HEADERS  += calendarwindow.h \
     calendardbus.h \
     calendarview.h \
+    constants.h
+
+RESOURCES += \
+    resources.qrc

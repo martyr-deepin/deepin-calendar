@@ -1,7 +1,7 @@
 #ifndef CALENDARWINDOW_H
 #define CALENDARWINDOW_H
 
-#include <dwindows.h>
+#include <DWindow>
 
 DWIDGET_USE_NAMESPACE
 

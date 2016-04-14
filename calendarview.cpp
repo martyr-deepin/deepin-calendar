@@ -9,6 +9,7 @@
 
 #include "calendarview.h"
 #include "calendardbus.h"
+#include "constants.h"
 
 #include <QGridLayout>
 #include <QLabel>
@@ -32,16 +33,21 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
         lunarCache = new QMap<QDate, CaLunarDayInfo>;
     if (!emptyCaLunarDayInfo)
         emptyCaLunarDayInfo = new CaLunarDayInfo;
-    m_dayNumFont.setPixelSize(12);
-    m_dayLunarFont.setPixelSize(11);
+    m_dayNumFont.setPixelSize(20);
+    m_dayLunarFont.setPixelSize(12);
 
     QHBoxLayout *headerLayout = new QHBoxLayout;
     QLocale locale;
     for (int i = 0; i != 7; ++i)
     {
         QLabel *label = new QLabel(locale.dayName(i ? i : 7, QLocale::ShortFormat));
-        label->setObjectName("CalendarHeader");
+        if (i == 0 || i == 6) {
+            label->setObjectName("CalendarHeaderWeekend");
+        } else {
+            label->setObjectName("CalendarHeaderWeekday");
+        }
         label->setAlignment(Qt::AlignCenter);
+        label->setFixedSize(DDECalendar::HeaderItemWidth, DDECalendar::HeaderItemHeight);
         headerLayout->addWidget(label);
     }
     headerLayout->setMargin(0);
@@ -52,6 +58,7 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     for (int r = 0; r != 6; ++r)
         for (int c = 0; c != 7; ++c) {
             QWidget *cell = new QWidget;
+            cell->setFixedSize(DDECalendar::CellWidth, DDECalendar::CellHeight);
             cell->installEventFilter(this);
             cell->setFocusPolicy(Qt::ClickFocus);
             cell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -175,6 +182,11 @@ const QString CalendarView::getCellDayNum(int pos)
         return result;
 }
 
+const QDate CalendarView::getCellDate(int pos)
+{
+    return m_days[pos];
+}
+
 const QString CalendarView::getLunar(int pos)
 {
     CaLunarDayInfo info = getCaLunarDayInfo(pos);
@@ -228,40 +240,29 @@ void CalendarView::paintCell(QWidget *cell)
     const int pos = m_cellList.indexOf(cell);
     const int type = getDateType(m_days[pos]);
     const bool isSelectedCell = pos == m_selectedCell;
+    const bool isCurrentDay = getCellDate(pos) == QDate::currentDate();
+
     QPainter painter(cell);
 
     // draw selected cell background circle
     if (isSelectedCell)
     {
         QRect fillRect = cell->rect();
-        QRect squareRect = fillRect;
-        if (fillRect.width() < fillRect.height())
-        {
-            squareRect.setTop(fillRect.top() + (fillRect.height() - fillRect.width()) / 2);
-            squareRect.setWidth(fillRect.width());
-            squareRect.setHeight(fillRect.width());
-        }
-        else
-        {
-            squareRect.setLeft(fillRect.left() + (fillRect.width() - fillRect.height()) / 2);
-            squareRect.setWidth(fillRect.height());
-            squareRect.setHeight(fillRect.height());
-        }
 
         painter.setRenderHints(QPainter::HighQualityAntialiasing);
-
         painter.setBrush(QBrush(m_backgroundCircleColor));
         painter.setPen(Qt::NoPen);
-        painter.drawRect(squareRect);
+        painter.drawRoundedRect(fillRect, 4, 4);
     }
 
     painter.setPen(Qt::SolidLine);
 
     // draw text of day
-    if (isSelectedCell)
+    if (isSelectedCell) {
         painter.setPen(m_selectedTextColor);
-    else
-    {
+    } else if (isCurrentDay) {
+        painter.setPen(m_currentDayTextColor);
+    } else {
         const int tType = type & 0xff;
         if (tType & SO_NotCurrentMonth)
             painter.setPen(m_notCurrentTextColor);
@@ -277,32 +278,25 @@ void CalendarView::paintCell(QWidget *cell)
     // draw text of day type
     if (m_showState & ShowLunar)
     {
-        if (isSelectedCell)
+        if (isSelectedCell) {
             painter.setPen(m_selectedLunarColor);
-        else if (m_showState & ShowLunarFestivalHighlight)
-        {
+        } else if (isCurrentDay) {
+            painter.setPen(m_currentDayLunarColor);
+        } else if (m_showState & ShowLunarFestivalHighlight) {
             const int tType = type & 0xff;
-            if (m_showState & ShowLunarFestivalHighlight)
-            {
-                if (tType & SO_NotCurrentMonth)
-                    painter.setPen(tType & SO_Festival ? m_festivalLunarColor : m_notCurrentLunarColor);
-                else if (tType & SO_Festival)
-                    painter.setPen(m_festivalLunarColor);
-                else if (tType & SO_Weekends)
-                    painter.setPen(m_weekendsLunarColor);
-                else
-                    painter.setPen(m_defaultLunarColor);
-            } else
+            if (tType & SO_NotCurrentMonth)
+                painter.setPen(tType & SO_Festival ? m_festivalLunarColor : m_notCurrentLunarColor);
+            else if (tType & SO_Festival)
+                painter.setPen(m_festivalLunarColor);
+            else if (tType & SO_Weekends)
+                painter.setPen(m_weekendsLunarColor);
+            else
                 painter.setPen(m_defaultLunarColor);
         }
 
         painter.setFont(m_dayLunarFont);
         painter.drawText(cell->rect(), Qt::AlignCenter, '\n' + getLunar(pos));
     }
-
-    // draw top border
-    painter.setPen(m_topBorderColor);
-    painter.drawLine(cell->rect().topLeft(), cell->rect().topRight());
 
     painter.end();
 }

@@ -1,0 +1,14 @@
+QFrame#CalendarBackground {
+    background-color: rgba(220, 220, 220, 200)
+}
+
+QLabel#CalendarHeaderWeekday {
+    font-size: 14px;
+    color: #696969;
+}
+
+QLabel#CalendarHeaderWeekend {
+    font-size: 14px;
+    color: #3b8cff;
+}
+
