@@ -16,11 +16,13 @@ PKGCONFIG += dtkbase dtkwidget
 SOURCES += main.cpp\
     calendarview.cpp \
     calendarwindow.cpp \
-    calendardbus.cpp
+    calendardbus.cpp \
+    calendartitlebarwidget.cpp
 
 HEADERS  += calendarwindow.h \
     calendardbus.h \
     calendarview.h \
+    calendartitlebarwidget.h \
     constants.h
 
 RESOURCES += \

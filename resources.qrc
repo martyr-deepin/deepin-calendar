@@ -1,5 +1,8 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/dde-calendar.qss</file>
+        <file>resources/icon/right_button.png</file>
+        <file>resources/icon/left_button.png</file>
+        <file>resources/icon/calendar.png</file>
     </qresource>
 </RCC>

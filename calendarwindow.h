@@ -3,6 +3,7 @@
 
 #include <DWindow>
 
+#include "calendartitlebarwidget.h"
 DWIDGET_USE_NAMESPACE
 
 class CalendarView;
@@ -13,7 +14,7 @@ public:
 
 private:
     CalendarView * m_calendarView = nullptr;
-
+    CalendarTitleBarWidget* m_calendarTitleBarWidget = nullptr;
     void initUI();
 };
 

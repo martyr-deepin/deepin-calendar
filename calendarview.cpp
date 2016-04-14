@@ -9,6 +9,7 @@
 
 #include "calendarview.h"
 #include "calendardbus.h"
+
 #include "constants.h"
 
 #include <QGridLayout>
@@ -100,13 +101,16 @@ int CalendarView::getDateType(const QDate &date) const
 void CalendarView::setCurrentDate(const QDate &date)
 {
     m_currentDate = date;
-
+    qDebug() << "m_currentDate:" << date;
     const QDate firstDay(date.year(), date.month(), 1);
+    qDebug() << "firstDay" << firstDay << date.day();
     const int daysOfCal = (firstDay.dayOfWeek() % 7) + date.day() - 1;
+
     const int y = date.dayOfWeek() % 7;
     const int x = daysOfCal / 7;
     const int currentIndex = x * 7 + y;
 
+    qDebug() << "calendarView:" << currentIndex;
     for (int i(0); i != 42; ++i)
         m_days[i] = date.addDays(i - currentIndex);
 
@@ -128,7 +132,9 @@ void CalendarView::setLunarVisible(bool visible)
 
 void CalendarView::setLunarFestivalHighlight(bool highlight)
 {
+    highlight = true;
     int state = int(m_showState);
+    //
 
     if (highlight)
         state |= ShowLunarFestivalHighlight;
@@ -222,6 +228,7 @@ void CalendarView::getDbusData() const
     const int pos = queue->head();
     queue->pop_front();
     const QDate date = m_days[pos];
+    qDebug() << "CalendarView:" << date << pos;
 
     bool o1;
     QDBusReply<CaLunarDayInfo> reply = m_DBusInter->GetLunarInfoBySolar(date.year(), date.month(), date.day(), o1);
@@ -230,6 +237,7 @@ void CalendarView::getDbusData() const
 
     m_cellList.at(pos)->update();
 
+    qDebug() << "calunar day info:" << reply.value() << m_cellList.length();
     // refersh lunar info
     if (date == m_currentDate)
         emit dateSelected(date, reply.value());

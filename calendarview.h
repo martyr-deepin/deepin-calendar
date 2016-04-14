@@ -93,7 +93,7 @@ private:
     QFont m_dayLunarFont;
 
     QColor m_topBorderColor = Qt::red;
-    QColor m_backgroundCircleColor = "#2ca7f8";
+    QColor m_backgroundCircleColor = QColor(33, 147, 202);
 
     QColor m_defaultTextColor = Qt::black;
     QColor m_currentDayTextColor = "#2ca7f8";
