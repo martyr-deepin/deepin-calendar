@@ -76,12 +76,22 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     mainLayout->setSpacing(0);
 
     setLayout(mainLayout);
+
+    connect(this, &CalendarView::dateSelected, this, &CalendarView::handleCurrentDateChanged);
+}
+
+void CalendarView::handleCurrentDateChanged(const QDate &date, const CaLunarDayInfo &detail) {
+    Q_UNUSED(detail);
+    setCurrentDate(date);
+    emit currentDateChanged(date.year(), date.month());
+    this->update();
 }
 
 int CalendarView::getDateType(const QDate &date) const
 {
     const int currentIndex = getDateIndex(date);
     const CaLunarDayInfo info = getCaLunarDayInfo(currentIndex);
+    qDebug() << "calunarDayInfo:" << info;
     const int dayOfWeek = date.dayOfWeek();
     bool weekends = dayOfWeek == 6 || dayOfWeek == 7;
     bool isCurrentMonth = m_currentDate.month() == date.month();
@@ -101,9 +111,8 @@ int CalendarView::getDateType(const QDate &date) const
 void CalendarView::setCurrentDate(const QDate &date)
 {
     m_currentDate = date;
-    qDebug() << "m_currentDate:" << date;
     const QDate firstDay(date.year(), date.month(), 1);
-    qDebug() << "firstDay" << firstDay << date.day();
+
     const int daysOfCal = (firstDay.dayOfWeek() % 7) + date.day() - 1;
 
     const int y = date.dayOfWeek() % 7;
@@ -111,9 +120,12 @@ void CalendarView::setCurrentDate(const QDate &date)
     const int currentIndex = x * 7 + y;
 
     qDebug() << "calendarView:" << currentIndex;
-    for (int i(0); i != 42; ++i)
+    for (int i(0); i != 42; ++i) {
         m_days[i] = date.addDays(i - currentIndex);
+        qDebug() << i-currentIndex << m_days[i];
+    }
 
+    qDebug() << "m_days:" << m_days;
     setSelectedCell(currentIndex);
 }
 
@@ -250,6 +262,7 @@ void CalendarView::paintCell(QWidget *cell)
     const bool isSelectedCell = pos == m_selectedCell;
     const bool isCurrentDay = getCellDate(pos) == QDate::currentDate();
 
+    qDebug() << "pos:" << pos << "type:" << type;
     QPainter painter(cell);
 
     // draw selected cell background circle
@@ -283,6 +296,7 @@ void CalendarView::paintCell(QWidget *cell)
     painter.setFont(m_dayNumFont);
     painter.drawText(cell->rect(), Qt::AlignCenter, getCellDayNum(pos));
 
+    qDebug() << "getCellDayNum" << getCellDayNum(pos);
     // draw text of day type
     if (m_showState & ShowLunar)
     {
@@ -303,6 +317,7 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
+        qDebug() << "Lunar: "<< getLunar(pos);
         painter.drawText(cell->rect(), Qt::AlignCenter, '\n' + getLunar(pos));
     }
 
@@ -338,5 +353,7 @@ void CalendarView::setSelectedCell(int index)
     m_cellList.at(prevPos)->update();
     m_cellList.at(index)->update();
 
+    qDebug() << "calendar view setSelectedCell:" << m_days[index]
+             << getCaLunarDayInfo(index);
     emit dateSelected(m_days[index], getCaLunarDayInfo(index));
 }

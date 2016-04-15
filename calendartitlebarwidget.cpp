@@ -80,7 +80,7 @@ void CalendarTitleBarWidget::setMonthIncrease(bool increase) {
             m_year+=1;
         }
     } else {
-        if (m_month=1) {
+        if (m_month==1) {
             m_month=12;
             m_year-=1;
         } else {

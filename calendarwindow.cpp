@@ -33,4 +33,7 @@ void CalendarWindow::initUI()
                                                   QDate::currentDate().month());
     QLayout * mainLayout = layout();
     mainLayout->addWidget(contentBg);
+
+    connect(m_calendarView, &CalendarView::currentDateChanged, m_calendarTitleBarWidget,
+            &CalendarTitleBarWidget::setCurrentYearMonth);
 }
