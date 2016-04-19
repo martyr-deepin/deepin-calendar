@@ -53,6 +53,18 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     }
     headerLayout->setMargin(0);
     headerLayout->setSpacing(0);
+    //add separator line
+    QLabel* separatorLine = new QLabel(this);
+    separatorLine->setFixedHeight(2);
+    separatorLine->setFixedWidth(660);
+    separatorLine->setStyleSheet("border: 1px solid rgba(0, 0, 0, .1);");
+
+    QHBoxLayout* separatorLineLayout = new QHBoxLayout;
+    separatorLineLayout->setMargin(0);
+    separatorLineLayout->setSpacing(0);
+    separatorLineLayout->addStretch(1);
+    separatorLineLayout->addWidget(separatorLine);
+    separatorLineLayout->addStretch(1);
 
     // cells grid
     QGridLayout *gridLayout = new QGridLayout;
@@ -71,6 +83,7 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(headerLayout);
+    mainLayout->addLayout(separatorLineLayout);
     mainLayout->addLayout(gridLayout);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);

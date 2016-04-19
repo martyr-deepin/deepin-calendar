@@ -30,7 +30,7 @@ RightArrowButton::~RightArrowButton(){}
 
 CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     : QWidget(parent) {
-
+    setFixedWidth(parent->width() - 120);
     DImageButton* m_calendarIcon = new DImageButton(this);
     m_calendarIcon->setFixedSize(24, 24);
     m_calendarIcon->setHoverPic(":/resources/icon/calendar.png");
@@ -52,19 +52,27 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
 
     m_layout = new QHBoxLayout;
     m_layout->setMargin(0);
-    m_layout->addSpacing(5);
+    m_layout->setSpacing(0);
+    m_layout->addSpacing(18);
     m_layout->addWidget(m_calendarIcon);
-    m_layout->addSpacing(30);
+    m_layout->addStretch(1);
     m_layout->addWidget(m_festivalLabel);
-    m_layout->addSpacing(30);
+    m_layout->addStretch(1);
     m_layout->addWidget(m_yearLeftBtn);
+    m_layout->addSpacing(5);
     m_layout->addWidget(m_yearLabel);
+    m_layout->addSpacing(5);
     m_layout->addWidget(m_yearRightBtn);
     m_layout->addSpacing(20);
     m_layout->addWidget(m_monthLeftBtn);
+    m_layout->addSpacing(5);
     m_layout->addWidget(m_monthLabel);
+    m_layout->addSpacing(5);
     m_layout->addWidget(m_monthRightBtn);
+    m_layout->addSpacing(130);
     setLayout(m_layout);
+
+    setStyleSheet("QLabel{font-family:SourceHanSansCN-Normal;font-size:14px;}");
 
     connect(m_yearLeftBtn, &LeftArrowButton::leftArrowClicked, this, &CalendarTitleBarWidget::setYearIncrease);
     connect(m_yearRightBtn, &RightArrowButton::rightArrowclicked, this, &CalendarTitleBarWidget::setYearIncrease);
