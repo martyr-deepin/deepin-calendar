@@ -36,4 +36,8 @@ void CalendarWindow::initUI()
 
     connect(m_calendarView, &CalendarView::currentDateChanged, m_calendarTitleBarWidget,
             &CalendarTitleBarWidget::setCurrentYearMonth);
+    connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::currentYearMonthChanged,
+            m_calendarView, &CalendarView::handleCurrentYearMonthChanged);
+    connect(m_calendarView, &CalendarView::currentFestivalChanged, m_calendarTitleBarWidget,
+            &CalendarTitleBarWidget::setFestival);
 }

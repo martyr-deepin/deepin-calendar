@@ -5,6 +5,11 @@ LeftArrowButton::LeftArrowButton(QWidget *parent)
     this->setHoverPic(":/resources/icon/left_button.png");
     this->setNormalPic(":/resources/icon/left_button.png");
     this->setPressPic(":/resources/icon/left_button.png");
+
+    connect(this, &LeftArrowButton::clicked, this, &LeftArrowButton::setIncrease);
+}
+void LeftArrowButton::setIncrease() {
+    emit leftArrowClicked();
 }
 LeftArrowButton::~LeftArrowButton(){}
 
@@ -14,6 +19,12 @@ RightArrowButton::RightArrowButton(QWidget *parent)
     this->setHoverPic(":/resources/icon/right_button.png");
     this->setNormalPic(":/resources/icon/right_button.png");
     this->setPressPic(":/resources/icon/right_button.png");
+
+    connect(this, &RightArrowButton::clicked, this, &RightArrowButton::setIncrease);
+}
+
+void RightArrowButton::setIncrease() {
+    emit rightArrowclicked();
 }
 RightArrowButton::~RightArrowButton(){}
 
@@ -27,7 +38,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_calendarIcon->setPressPic(":/resources/icon/calendar.png");
 
     m_festivalLabel = new QLabel(this);
-    m_festivalLabel->setText(tr("new year"));
+    m_festivalLabel->setText(m_festival);
     m_yearLabel = new QLabel(this);
     m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
 
@@ -54,6 +65,17 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->addWidget(m_monthLabel);
     m_layout->addWidget(m_monthRightBtn);
     setLayout(m_layout);
+
+    connect(m_yearLeftBtn, &LeftArrowButton::leftArrowClicked, this, &CalendarTitleBarWidget::setYearIncrease);
+    connect(m_yearRightBtn, &RightArrowButton::rightArrowclicked, this, &CalendarTitleBarWidget::setYearIncrease);
+    connect(m_monthLeftBtn, &LeftArrowButton::leftArrowClicked, this, &CalendarTitleBarWidget::setMonthIncrease);
+    connect(m_monthRightBtn, &RightArrowButton::rightArrowclicked, this, &CalendarTitleBarWidget::setMonthIncrease);
+}
+
+void CalendarTitleBarWidget::setFestival(const QString &festival) {
+    m_festival = festival;
+    m_festivalLabel->setText(m_festival);
+    update();
 }
 
 void CalendarTitleBarWidget::setCurrentYearMonth(int yearNum, int monthNum) {
@@ -69,6 +91,9 @@ void CalendarTitleBarWidget::setYearIncrease(bool increase) {
     } else {
         m_year-=1;
     }
+    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
+
+    emit currentYearMonthChanged(m_year, m_month);
 }
 
 void CalendarTitleBarWidget::setMonthIncrease(bool increase) {
@@ -87,6 +112,10 @@ void CalendarTitleBarWidget::setMonthIncrease(bool increase) {
             m_month-=1;
         }
     }
+
+    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
+    m_monthLabel->setText(QString(tr("%1 month").arg(m_month)));
+    emit currentYearMonthChanged(m_year, m_month);
 }
 CalendarTitleBarWidget::~CalendarTitleBarWidget() {
 

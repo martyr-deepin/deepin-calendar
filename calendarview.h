@@ -58,6 +58,7 @@ public:
 signals:
     void dateSelected(const QDate &date, const CaLunarDayInfo &detail) const;
     void currentDateChanged(const int year, const int month);
+    void currentFestivalChanged(const QString &festival);
     void cellSelectableChanged(bool cellSelectable) const;
 
 public slots:
@@ -66,6 +67,7 @@ public slots:
     void setLunarFestivalHighlight(bool highlight);
     void setCellSelectable(bool selectable);
     void handleCurrentDateChanged(const QDate &date, const CaLunarDayInfo &detail);
+    void handleCurrentYearMonthChanged(int year, int month);
 private:
     int getDateIndex(const QDate &date) const;
     const QString getCellDayNum(int pos);

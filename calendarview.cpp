@@ -87,11 +87,18 @@ void CalendarView::handleCurrentDateChanged(const QDate &date, const CaLunarDayI
     this->update();
 }
 
+void CalendarView::handleCurrentYearMonthChanged(int year, int month) {
+
+    QDate changedDate;
+    changedDate.setDate(year, month,  m_currentDate.day());
+    setCurrentDate(changedDate);
+}
+
 int CalendarView::getDateType(const QDate &date) const
 {
     const int currentIndex = getDateIndex(date);
     const CaLunarDayInfo info = getCaLunarDayInfo(currentIndex);
-    qDebug() << "calunarDayInfo:" << info;
+
     const int dayOfWeek = date.dayOfWeek();
     bool weekends = dayOfWeek == 6 || dayOfWeek == 7;
     bool isCurrentMonth = m_currentDate.month() == date.month();
@@ -111,6 +118,19 @@ int CalendarView::getDateType(const QDate &date) const
 void CalendarView::setCurrentDate(const QDate &date)
 {
     m_currentDate = date;
+    int tmpcurrentIndex = getDateIndex(m_currentDate);
+    const CaLunarDayInfo info = getCaLunarDayInfo(tmpcurrentIndex);
+
+    if (!info.mLunarFestival.isEmpty()) {
+        emit currentFestivalChanged(info.mLunarFestival);
+    } else if (!info.mTerm.isEmpty()) {
+        emit currentFestivalChanged(info.mTerm);
+    } else if (!info.mSolarFestival.isEmpty()) {
+        emit currentFestivalChanged(info.mSolarFestival);
+    } else {
+        emit currentFestivalChanged("");
+    }
+
     const QDate firstDay(date.year(), date.month(), 1);
 
     const int daysOfCal = (firstDay.dayOfWeek() % 7) + date.day() - 1;
@@ -119,13 +139,10 @@ void CalendarView::setCurrentDate(const QDate &date)
     const int x = daysOfCal / 7;
     const int currentIndex = x * 7 + y;
 
-    qDebug() << "calendarView:" << currentIndex;
     for (int i(0); i != 42; ++i) {
         m_days[i] = date.addDays(i - currentIndex);
-        qDebug() << i-currentIndex << m_days[i];
     }
 
-    qDebug() << "m_days:" << m_days;
     setSelectedCell(currentIndex);
 }
 
@@ -240,7 +257,6 @@ void CalendarView::getDbusData() const
     const int pos = queue->head();
     queue->pop_front();
     const QDate date = m_days[pos];
-    qDebug() << "CalendarView:" << date << pos;
 
     bool o1;
     QDBusReply<CaLunarDayInfo> reply = m_DBusInter->GetLunarInfoBySolar(date.year(), date.month(), date.day(), o1);
@@ -249,7 +265,6 @@ void CalendarView::getDbusData() const
 
     m_cellList.at(pos)->update();
 
-    qDebug() << "calunar day info:" << reply.value() << m_cellList.length();
     // refersh lunar info
     if (date == m_currentDate)
         emit dateSelected(date, reply.value());
@@ -262,7 +277,6 @@ void CalendarView::paintCell(QWidget *cell)
     const bool isSelectedCell = pos == m_selectedCell;
     const bool isCurrentDay = getCellDate(pos) == QDate::currentDate();
 
-    qDebug() << "pos:" << pos << "type:" << type;
     QPainter painter(cell);
 
     // draw selected cell background circle
@@ -296,7 +310,6 @@ void CalendarView::paintCell(QWidget *cell)
     painter.setFont(m_dayNumFont);
     painter.drawText(cell->rect(), Qt::AlignCenter, getCellDayNum(pos));
 
-    qDebug() << "getCellDayNum" << getCellDayNum(pos);
     // draw text of day type
     if (m_showState & ShowLunar)
     {
@@ -317,7 +330,6 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
-        qDebug() << "Lunar: "<< getLunar(pos);
         painter.drawText(cell->rect(), Qt::AlignCenter, '\n' + getLunar(pos));
     }
 
@@ -353,7 +365,5 @@ void CalendarView::setSelectedCell(int index)
     m_cellList.at(prevPos)->update();
     m_cellList.at(index)->update();
 
-    qDebug() << "calendar view setSelectedCell:" << m_days[index]
-             << getCaLunarDayInfo(index);
     emit dateSelected(m_days[index], getCaLunarDayInfo(index));
 }
