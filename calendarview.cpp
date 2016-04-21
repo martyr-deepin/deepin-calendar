@@ -134,12 +134,19 @@ void CalendarView::setCurrentDate(const QDate &date)
     int tmpcurrentIndex = getDateIndex(m_currentDate);
     const CaLunarDayInfo info = getCaLunarDayInfo(tmpcurrentIndex);
 
+
     if (!info.mLunarFestival.isEmpty()) {
         emit currentFestivalChanged(info.mLunarFestival);
     } else if (!info.mTerm.isEmpty()) {
         emit currentFestivalChanged(info.mTerm);
     } else if (!info.mSolarFestival.isEmpty()) {
-        emit currentFestivalChanged(info.mSolarFestival);
+        QStringList tmpFestival = info.mSolarFestival.split(" ");
+
+        if (tmpFestival.length()>=3) {
+            emit currentFestivalChanged(QString("%1 %2").arg(tmpFestival[0]).arg(tmpFestival[1]));
+        } else {
+            emit currentFestivalChanged(info.mSolarFestival);
+        }
     } else {
         emit currentFestivalChanged("");
     }
