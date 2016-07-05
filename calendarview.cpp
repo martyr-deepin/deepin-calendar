@@ -55,9 +55,9 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     headerLayout->setSpacing(0);
     //add separator line
     QLabel* separatorLine = new QLabel(this);
-    separatorLine->setFixedHeight(2);
+    separatorLine->setFixedHeight(1);
     separatorLine->setFixedWidth(660);
-    separatorLine->setStyleSheet("border: 1px solid rgba(0, 0, 0, .1);");
+    separatorLine->setStyleSheet("border: 1px solid rgba(0, 0, 0, 0.1);");
 
     QHBoxLayout* separatorLineLayout = new QHBoxLayout;
     separatorLineLayout->setMargin(0);
@@ -328,7 +328,7 @@ void CalendarView::paintCell(QWidget *cell)
     }
 
     painter.setFont(m_dayNumFont);
-    painter.drawText(cell->rect(), Qt::AlignCenter, getCellDayNum(pos));
+    painter.drawText(cell->rect().adjusted(0, 0, 0, -8), Qt::AlignCenter, getCellDayNum(pos));
 
     // draw text of day type
     if (m_showState & ShowLunar)
@@ -350,7 +350,7 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
-        painter.drawText(cell->rect(), Qt::AlignCenter, '\n' + getLunar(pos));
+        painter.drawText(cell->rect().adjusted(0, 26, 0, 0), Qt::AlignCenter, getLunar(pos));
     }
 
     painter.end();

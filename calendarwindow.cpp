@@ -15,6 +15,9 @@ void CalendarWindow::initUI()
 {
     QFrame * contentBg = new QFrame;
     contentBg->setObjectName("CalendarBackground");
+    contentBg->setStyleSheet("QFrame#CalendarBackground { "
+                             "background:white;"
+                             "}");
     contentBg->setFixedSize(700, 500);
 
     m_calendarView = new CalendarView(contentBg);

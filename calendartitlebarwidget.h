@@ -39,6 +39,7 @@ public:
     ~CalendarTitleBarWidget();
 signals:
     void currentYearMonthChanged(int year, int month);
+
 public slots:
     void setCurrentYearMonth(int yearNum, int monthNum);
     //if increase=true, m_year+1; else m_year-1;
