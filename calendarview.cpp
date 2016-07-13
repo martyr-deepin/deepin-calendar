@@ -53,6 +53,7 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     }
     headerLayout->setMargin(0);
     headerLayout->setSpacing(0);
+
     //add separator line
     QLabel* separatorLine = new QLabel(this);
     separatorLine->setFixedHeight(1);

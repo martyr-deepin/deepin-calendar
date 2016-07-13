@@ -20,6 +20,10 @@ void CalendarWindow::initUI()
                              "}");
     contentBg->setFixedSize(700, 500);
 
+    QLabel * sep = new QLabel(this);
+    sep->setFixedSize(contentBg->width() - 6, 1);
+    sep->setStyleSheet("QLabel { background : rgba(0, 0, 0, 20); }");
+
     m_calendarView = new CalendarView(contentBg);
     m_calendarView->setFixedSize(contentBg->size());
 
@@ -31,12 +35,15 @@ void CalendarWindow::initUI()
     setContentsMargins(QMargins(0, 0, 0, 0));
 
     m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
-
-    setTitlebarWidget(m_calendarTitleBarWidget);
     m_calendarTitleBarWidget->setCurrentYearMonth(QDate::currentDate().year(),
                                                   QDate::currentDate().month());
-    QLayout * mainLayout = layout();
-    mainLayout->addWidget(contentBg);
+    setTitlebarWidget(m_calendarTitleBarWidget);
+
+    QHBoxLayout * mainLayout = qobject_cast<QHBoxLayout*>(layout());
+    QVBoxLayout * contentLayout = new QVBoxLayout(this);
+    contentLayout->addWidget(sep, 0, Qt::AlignHCenter);
+    contentLayout->addWidget(contentBg);
+    mainLayout->addLayout(contentLayout);
 
     connect(m_calendarView, &CalendarView::currentDateChanged, m_calendarTitleBarWidget,
             &CalendarTitleBarWidget::setCurrentYearMonth);
