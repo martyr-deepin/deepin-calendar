@@ -23,8 +23,6 @@ int main(int argc, char *argv[])
 {
     DApplication a(argc, argv);
     a.setTheme("light");
-
-    qDebug() << GetStyleSheetContent();
     a.setStyleSheet(GetStyleSheetContent());
 
     CalendarWindow cw;
