@@ -38,12 +38,9 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_calendarIcon->setPressPic(":/resources/icon/calendar.png");
 
     m_festivalLabel = new QLabel(this);
-    m_festivalLabel->setText(m_festival);
     m_yearLabel = new QLabel(this);
-    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
-
     m_monthLabel = new QLabel(this);
-    m_monthLabel->setText(QString(tr("%1 month").arg(m_month)));
+
     m_yearLeftBtn = new LeftArrowButton(this);
     m_yearRightBtn = new RightArrowButton(this);
 
@@ -53,11 +50,11 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout = new QHBoxLayout;
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
-    m_layout->addSpacing(18);
+    m_layout->addSpacing(8);
     m_layout->addWidget(m_calendarIcon);
-    m_layout->addStretch(1);
+    m_layout->addSpacing(40);
     m_layout->addWidget(m_festivalLabel);
-    m_layout->addStretch(1);
+    m_layout->addStretch();
     m_layout->addWidget(m_yearLeftBtn);
     m_layout->addSpacing(5);
     m_layout->addWidget(m_yearLabel);
@@ -69,7 +66,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->addWidget(m_monthLabel);
     m_layout->addSpacing(5);
     m_layout->addWidget(m_monthRightBtn);
-    m_layout->addSpacing(130);
+    m_layout->addStretch();
     setLayout(m_layout);
 
     setStyleSheet("QLabel{font-family:SourceHanSansCN-Normal;font-size:14px;}");
@@ -83,14 +80,13 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
 void CalendarTitleBarWidget::setFestival(const QString &festival) {
     m_festival = festival;
     m_festivalLabel->setText(m_festival);
-    update();
 }
 
 void CalendarTitleBarWidget::setCurrentYearMonth(int yearNum, int monthNum) {
     m_year = yearNum;
     m_month = monthNum;
-    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
-    m_monthLabel->setText(QString(tr("%1 month").arg(m_month)));
+    m_yearLabel->setText(QString::number(m_year));
+    m_monthLabel->setText(QString::number(m_month));
 }
 
 void CalendarTitleBarWidget::setYearIncrease(bool increase) {
