@@ -2,9 +2,9 @@
 
 LeftArrowButton::LeftArrowButton(QWidget *parent)
     : DImageButton(parent) {
-    this->setHoverPic(":/resources/icon/left_button.png");
-    this->setNormalPic(":/resources/icon/left_button.png");
-    this->setPressPic(":/resources/icon/left_button.png");
+    this->setHoverPic(":/resources/icon/previous_hover.png");
+    this->setNormalPic(":/resources/icon/previous_normal.png");
+    this->setPressPic(":/resources/icon/previous_press.png");
 
     connect(this, &LeftArrowButton::clicked, this, &LeftArrowButton::setIncrease);
 }
@@ -16,9 +16,9 @@ LeftArrowButton::~LeftArrowButton(){}
 RightArrowButton::RightArrowButton(QWidget *parent)
     : DImageButton(parent) {
     this->setFixedSize(24, 24);
-    this->setHoverPic(":/resources/icon/right_button.png");
-    this->setNormalPic(":/resources/icon/right_button.png");
-    this->setPressPic(":/resources/icon/right_button.png");
+    this->setHoverPic(":/resources/icon/next_hover.png");
+    this->setNormalPic(":/resources/icon/next_normal.png");
+    this->setPressPic(":/resources/icon/next_press.png");
 
     connect(this, &RightArrowButton::clicked, this, &RightArrowButton::setIncrease);
 }
