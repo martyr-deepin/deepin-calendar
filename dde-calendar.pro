@@ -29,3 +29,11 @@ HEADERS  += calendarwindow.h \
 
 RESOURCES += \
     resources.qrc
+
+desktop_files.files = deepin-remote-assistance.desktop
+desktop_files.path = /usr/share/applications/
+
+icon_files.files = resources/icons/deepin-calendar.svg
+icon_files.path = /usr/share/icons/hicolor/scalable/apps/
+
+INSTALLS += desktop_files icon_files

@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=Application;Utility;Calendar;
+Comment=Calendar for Deepin OS.
+Encoding=UTF-8
+Exec=/usr/bin/dde-calendar
+Icon=deepin-calendar
+Name=Deepin Calendar
+StartupNotify=false
+Terminal=false
+Type=Application
+X-MultipleArgs=false
+
+# Translations
+Comment[zh_CN]=Deepin桌面环境的日历程序.
+Name[zh_CN]=日历
+
+X-Deepin-CreatedBy=Launcher
+X-Deepin-AppID=dde-calendar
