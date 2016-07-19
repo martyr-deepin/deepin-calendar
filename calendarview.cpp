@@ -240,6 +240,10 @@ const QString CalendarView::getLunar(int pos)
 {
     CaLunarDayInfo info = getCaLunarDayInfo(pos);
 
+    if (info.mLunarDayName == "初一") {
+        info.mLunarDayName = info.mLunarMonthName;
+    }
+
     if (info.mTerm.isEmpty())
         return info.mLunarDayName;
     return info.mTerm;
