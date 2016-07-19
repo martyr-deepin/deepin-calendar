@@ -5,6 +5,9 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
+#include <DMenu>
+#include <DAboutDialog>
+
 CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
@@ -77,4 +80,28 @@ void CalendarWindow::initUI()
             this, &CalendarWindow::handleCurrentYearMonthChanged);
     connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::todayButtonClicked,
             this, &CalendarWindow::handleTodayButtonClicked);
+
+    setupMenu();
+}
+
+void CalendarWindow::setupMenu()
+{
+    DMenu * menu = dbusMenu();
+    DAction * aboutAction = menu->addAction(tr("About"));
+    DAction * quitAction = menu->addAction(tr("Quit"));
+
+    connect(menu, &DMenu::triggered, [this, aboutAction, quitAction](DAction *action){
+        if (aboutAction == action) {
+            DAboutDialog *about = new DAboutDialog(tr("Deepin Calendar"),
+                                                   ":/resources/icon/deepin-calendar.svg",
+                                                   ":/resource/icon/deepin-calendar.svg",
+                                                   tr("Deepin Calendar"),
+                                                   tr("Version:") + " 1.0",
+                                                   "description.",
+                                                   this);
+            about->show();
+        } else if (quitAction == action) {
+            qApp->quit();
+        }
+    });
 }

@@ -8,5 +8,6 @@
         <file>resources/icon/next_hover.png</file>
         <file>resources/icon/next_press.png</file>
         <file>resources/icon/calendar.png</file>
+        <file>resources/icon/deepin-calendar.svg</file>
     </qresource>
 </RCC>

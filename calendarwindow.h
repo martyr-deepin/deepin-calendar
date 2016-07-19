@@ -21,7 +21,9 @@ public slots:
 private:
     CalendarView * m_calendarView = nullptr;
     CalendarTitleBarWidget* m_calendarTitleBarWidget = nullptr;
+
     void initUI();
+    void setupMenu();
 };
 
 #endif // CALENDARWINDOW_H
