@@ -3,14 +3,20 @@
 
 #include <DWindow>
 
+#include "calendarview.h"
 #include "calendartitlebarwidget.h"
+
 DWIDGET_USE_NAMESPACE
 
-class CalendarView;
 class CalendarWindow : public DWindow
 {
 public:
     CalendarWindow();
+
+public slots:
+    void handleTodayButtonClicked();
+    void handleDateSelected(const QDate &date, const CaLunarDayInfo &detail);
+    void handleCurrentYearMonthChanged(int year, int month);
 
 private:
     CalendarView * m_calendarView = nullptr;

@@ -31,11 +31,17 @@ RightArrowButton::~RightArrowButton(){}
 CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     : QWidget(parent) {
     setFixedWidth(parent->width() - 120);
-    DImageButton* m_calendarIcon = new DImageButton(this);
-    m_calendarIcon->setFixedSize(24, 24);
+
+    QFrame *iconHolder = new QFrame(this);
+    iconHolder->setAttribute(Qt::WA_TranslucentBackground);
+    iconHolder->setFixedSize(24, 24);
+
+    m_calendarIcon = new DImageButton(iconHolder);
+    m_calendarIcon->setFixedSize(iconHolder->size());
     m_calendarIcon->setHoverPic(":/resources/icon/calendar.png");
     m_calendarIcon->setNormalPic(":/resources/icon/calendar.png");
     m_calendarIcon->setPressPic(":/resources/icon/calendar.png");
+    m_calendarIcon->hide();
 
     m_festivalLabel = new QLabel(this);
     m_yearLabel = new QLabel(this);
@@ -51,7 +57,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
     m_layout->addSpacing(8);
-    m_layout->addWidget(m_calendarIcon);
+    m_layout->addWidget(iconHolder);
     m_layout->addSpacing(40);
     m_layout->addWidget(m_festivalLabel);
     m_layout->addStretch();
@@ -75,11 +81,22 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     connect(m_yearRightBtn, &RightArrowButton::rightArrowclicked, this, &CalendarTitleBarWidget::setYearIncrease);
     connect(m_monthLeftBtn, &LeftArrowButton::leftArrowClicked, this, &CalendarTitleBarWidget::setMonthIncrease);
     connect(m_monthRightBtn, &RightArrowButton::rightArrowclicked, this, &CalendarTitleBarWidget::setMonthIncrease);
+    connect(m_calendarIcon, &DImageButton::clicked, this, &CalendarTitleBarWidget::todayButtonClicked);
 }
 
 void CalendarTitleBarWidget::setFestival(const QString &festival) {
     m_festival = festival;
     m_festivalLabel->setText(m_festival);
+}
+
+void CalendarTitleBarWidget::showCalendarIcon()
+{
+    m_calendarIcon->show();
+}
+
+void CalendarTitleBarWidget::hideCalendarIcon()
+{
+    m_calendarIcon->hide();
 }
 
 void CalendarTitleBarWidget::setCurrentYearMonth(int yearNum, int monthNum) {

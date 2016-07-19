@@ -38,6 +38,7 @@ public:
     CalendarTitleBarWidget(QWidget* parent=0);
     ~CalendarTitleBarWidget();
 signals:
+    void todayButtonClicked();
     void currentYearMonthChanged(int year, int month);
 
 public slots:
@@ -46,10 +47,15 @@ public slots:
     void setYearIncrease(bool increase);
     void setMonthIncrease(bool increase);
     void setFestival(const QString &festival);
+    void showCalendarIcon();
+    void hideCalendarIcon();
+
 private:
     QLabel* m_festivalLabel;
     QLabel* m_yearLabel;
     QLabel* m_monthLabel;
+    DImageButton* m_calendarIcon;
+
     int m_year=2000;
     int m_month=10;
     QString m_festival="";

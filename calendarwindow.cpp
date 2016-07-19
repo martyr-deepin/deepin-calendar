@@ -1,5 +1,4 @@
 #include "calendarwindow.h"
-#include "calendarview.h"
 
 #include <QDate>
 #include <QVBoxLayout>
@@ -9,6 +8,27 @@ CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
     initUI();
+}
+
+void CalendarWindow::handleTodayButtonClicked()
+{
+    m_calendarView->setCurrentDate(QDate::currentDate());
+}
+
+void CalendarWindow::handleDateSelected(const QDate &date, const CaLunarDayInfo &)
+{
+    if (date == QDate::currentDate()) {
+        m_calendarTitleBarWidget->hideCalendarIcon();
+    } else {
+        m_calendarTitleBarWidget->showCalendarIcon();
+    }
+}
+
+void CalendarWindow::handleCurrentYearMonthChanged(int year, int month)
+{
+    QDate changedDate;
+    changedDate.setDate(year, month,  QDate::currentDate().day());
+    m_calendarView->setCurrentDate(changedDate);
 }
 
 void CalendarWindow::initUI()
@@ -45,10 +65,14 @@ void CalendarWindow::initUI()
     contentLayout->addWidget(contentBg);
     mainLayout->addLayout(contentLayout);
 
-    connect(m_calendarView, &CalendarView::currentDateChanged, m_calendarTitleBarWidget,
-            &CalendarTitleBarWidget::setCurrentYearMonth);
+    connect(m_calendarView, &CalendarView::currentDateChanged,
+            m_calendarTitleBarWidget, &CalendarTitleBarWidget::setCurrentYearMonth);
+    connect(m_calendarView, &CalendarView::currentFestivalChanged,
+            m_calendarTitleBarWidget, &CalendarTitleBarWidget::setFestival);
+    connect(m_calendarView, &CalendarView::dateSelected,
+            this, &CalendarWindow::handleDateSelected);
     connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::currentYearMonthChanged,
-            m_calendarView, &CalendarView::handleCurrentYearMonthChanged);
-    connect(m_calendarView, &CalendarView::currentFestivalChanged, m_calendarTitleBarWidget,
-            &CalendarTitleBarWidget::setFestival);
+            this, &CalendarWindow::handleCurrentYearMonthChanged);
+    connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::todayButtonClicked,
+            this, &CalendarWindow::handleTodayButtonClicked);
 }

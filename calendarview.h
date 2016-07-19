@@ -18,6 +18,17 @@
 
 class CalendarDBus;
 class CaLunarDayInfo;
+
+enum CalendarDayType
+{
+    SO_Festival = QStyleOption::SO_CustomBase + 0x01,
+    SO_Weekends = QStyleOption::SO_CustomBase + 0x02,
+    SO_WeekendsAndFestival = SO_Festival | SO_Weekends,
+    SO_NotCurrentMonth = 0x04,
+    SO_NotCurrentMonthFestival = SO_NotCurrentMonth | SO_Festival,
+    SO_Default,
+};
+
 class CalendarView : public QWidget
 {
     Q_OBJECT
@@ -38,17 +49,6 @@ public:
         Normal = ShowLunar | ShowLunarFestivalHighlight,
     };
 
-private:
-    enum CalendarDayType
-    {
-        SO_Festival = QStyleOption::SO_CustomBase + 0x01,
-        SO_Weekends = QStyleOption::SO_CustomBase + 0x02,
-        SO_WeekendsAndFestival = SO_Festival | SO_Weekends,
-        SO_NotCurrentMonth = 0x04,
-        SO_NotCurrentMonthFestival = SO_NotCurrentMonth | SO_Festival,
-        SO_Default,
-    };
-
 public:
     explicit CalendarView(QWidget *parent = 0);
 
@@ -67,7 +67,7 @@ public slots:
     void setLunarFestivalHighlight(bool highlight);
     void setCellSelectable(bool selectable);
     void handleCurrentDateChanged(const QDate &date, const CaLunarDayInfo &detail);
-    void handleCurrentYearMonthChanged(int year, int month);
+
 private:
     int getDateIndex(const QDate &date) const;
     const QString getCellDayNum(int pos);

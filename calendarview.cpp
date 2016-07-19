@@ -101,13 +101,6 @@ void CalendarView::handleCurrentDateChanged(const QDate &date, const CaLunarDayI
     this->update();
 }
 
-void CalendarView::handleCurrentYearMonthChanged(int year, int month) {
-
-    QDate changedDate;
-    changedDate.setDate(year, month,  m_currentDate.day());
-    setCurrentDate(changedDate);
-}
-
 int CalendarView::getDateType(const QDate &date) const
 {
     const int currentIndex = getDateIndex(date);
