@@ -1,0 +1,6 @@
+<node>
+  <interface name="com.deepin.dde.Calendar">
+	  <method name="RaiseWindow" />
+  </interface>
+</node>
+

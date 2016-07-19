@@ -1,4 +1,5 @@
 #include "calendarwindow.h"
+#include "dbuscalendar_adaptor.h"
 
 #include <QDate>
 #include <QVBoxLayout>
@@ -8,6 +9,7 @@ CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
     initUI();
+    new CalendarAdaptor(this);
 }
 
 void CalendarWindow::handleTodayButtonClicked()

@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     calendarview.cpp \
     calendarwindow.cpp \
     calendardbus.cpp \
-    calendartitlebarwidget.cpp
+    calendartitlebarwidget.cpp \
+    dbuscalendar_adaptor.cpp
 
 HEADERS  += calendarwindow.h \
     calendardbus.h \
     calendarview.h \
     calendartitlebarwidget.h \
-    constants.h
+    constants.h \
+    dbuscalendar_adaptor.h
 
 RESOURCES += \
     resources.qrc
