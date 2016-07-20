@@ -9,5 +9,7 @@
         <file>resources/icon/next_press.png</file>
         <file>resources/icon/calendar.png</file>
         <file>resources/icon/deepin-calendar.svg</file>
+        <file>resources/icon/deepin-calendar_48.png</file>
+        <file>resources/icon/deepin-calendar_96.png</file>
     </qresource>
 </RCC>

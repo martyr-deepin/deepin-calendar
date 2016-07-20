@@ -94,12 +94,12 @@ void CalendarWindow::setupMenu()
 
     connect(menu, &DMenu::triggered, [this, aboutAction, quitAction](DAction *action){
         if (aboutAction == action) {
-            DAboutDialog *about = new DAboutDialog(tr("Deepin Calendar"),
-                                                   ":/resources/icon/deepin-calendar.svg",
-                                                   ":/resource/icon/deepin-calendar.svg",
+            DAboutDialog *about = new DAboutDialog(tr("Calendar"),
+                                                   QString(":/resources/icon/deepin-calendar_48.png"),
+                                                   QString(":/resources/icon/deepin-calendar_96.png"),
                                                    tr("Deepin Calendar"),
-                                                   tr("Version:") + " 1.0",
-                                                   "description.",
+                                                   tr("Version: %1").arg(qApp->applicationVersion()),
+                                                   tr("Calendar is a date tool."),
                                                    this);
             about->show();
         } else if (quitAction == action) {
