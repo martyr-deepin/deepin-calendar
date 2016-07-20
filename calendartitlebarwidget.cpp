@@ -72,7 +72,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->addWidget(m_monthLabel);
     m_layout->addSpacing(5);
     m_layout->addWidget(m_monthRightBtn);
-    m_layout->addStretch();
+    m_layout->addSpacing(240);
     setLayout(m_layout);
 
     setStyleSheet("QLabel{font-family:SourceHanSansCN-Normal;font-size:14px;}");
