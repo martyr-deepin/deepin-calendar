@@ -57,7 +57,7 @@ void CalendarWindow::initUI()
     // TODO: API change cause compile error, replace with equivalent API
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setTitlebarFixedHeight(40);
-    setFixedSize(contentBg->width(), contentBg->height() + titlebarHeight());
+    setFixedSize(contentBg->width() + 4, contentBg->height() + titlebarHeight());
     setContentWidget(contentBg);
     setContentsMargins(QMargins(0, 0, 0, 0));
 
