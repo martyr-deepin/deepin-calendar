@@ -46,6 +46,10 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_festivalLabel = new QLabel(this);
     m_yearLabel = new QLabel(this);
     m_monthLabel = new QLabel(this);
+    // Give month label a fixed width, so it won't shrink or expand
+    // even when the month number changes between single and double.
+    m_monthLabel->setFixedWidth(20);
+    m_monthLabel->setAlignment(Qt::AlignCenter);
 
     m_yearLeftBtn = new LeftArrowButton(this);
     m_yearRightBtn = new RightArrowButton(this);
