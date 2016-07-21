@@ -1,17 +1,27 @@
 #include "calendarwindow.h"
 #include "dbuscalendar_adaptor.h"
+#include "constants.h"
 
 #include <QDate>
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QScrollArea>
 
 #include <DMenu>
 #include <DAboutDialog>
 
+const int CalendarHeaderHeight = 60;
+
 CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
+    setTitlebarFixedHeight(40);
+    setContentsMargins(QMargins(0, 0, 0, 0));
+
     initUI();
+    initAnimation();
+
     new CalendarAdaptor(this);
 }
 
@@ -36,40 +46,66 @@ void CalendarWindow::handleCurrentYearMonthChanged(int year, int month)
     m_calendarView->setCurrentDate(changedDate);
 }
 
+void CalendarWindow::previousMonth()
+{
+    slideMonth(false);
+}
+
+void CalendarWindow::nextMonth()
+{
+    slideMonth(true);
+}
+
+void CalendarWindow::wheelEvent(QWheelEvent * e)
+{
+    if (e->delta() < 0) {
+        nextMonth();
+    } else {
+        previousMonth();
+    }
+}
+
 void CalendarWindow::initUI()
 {
-    QFrame * contentBg = new QFrame;
-    contentBg->setObjectName("CalendarBackground");
-    contentBg->setStyleSheet("QFrame#CalendarBackground { "
+    m_contentBackground = new QFrame;
+    m_contentBackground->setObjectName("CalendarBackground");
+    m_contentBackground->setStyleSheet("QFrame#CalendarBackground { "
                              "background:white;"
                              "}");
-    contentBg->setFixedSize(700, 500);
+    m_contentBackground->setFixedSize(700, 500);
 
-    QLabel * sep = new QLabel(this);
-    sep->setFixedSize(contentBg->width() - 6, 1);
-    sep->setStyleSheet("QLabel { background : rgba(0, 0, 0, 20); }");
-
-    m_calendarView = new CalendarView(contentBg);
-    m_calendarView->setFixedSize(contentBg->size());
-
-    m_calendarView->setCurrentDate(QDate::currentDate());
-
-    // TODO: API change cause compile error, replace with equivalent API
-    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    setTitlebarFixedHeight(40);
-    setFixedSize(contentBg->width() + 4, contentBg->height() + titlebarHeight());
-    setContentWidget(contentBg);
-    setContentsMargins(QMargins(0, 0, 0, 0));
+    setFixedSize(m_contentBackground->width() + 4, m_contentBackground->height() + titlebarHeight() + 6);
+    setContentWidget(m_contentBackground);
 
     m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
     m_calendarTitleBarWidget->setCurrentYearMonth(QDate::currentDate().year(),
                                                   QDate::currentDate().month());
     setTitlebarWidget(m_calendarTitleBarWidget);
 
+    // Separator between title bar and calendar content.
+    QLabel * sep = new QLabel(this);
+    sep->setFixedSize(m_contentBackground->width() - 6, 1);
+    sep->setStyleSheet("QLabel { background : rgba(0, 0, 0, 20); }");
+
+    m_calendarView = new CalendarView(m_contentBackground);
+    m_calendarView->setFixedSize(m_contentBackground->size());
+    m_calendarView->setCurrentDate(QDate::currentDate());
+
+    m_animationContainer = new QFrame(m_contentBackground);
+    m_animationContainer->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
+    m_animationContainer->setFixedSize(m_calendarView->width(),
+                                       m_calendarView->height() - CalendarHeaderHeight);
+    m_animationContainer->move(0, CalendarHeaderHeight);
+
+    m_fakeContent = new QLabel(m_animationContainer);
+    m_fakeContent->setStyleSheet("QLabel { background: rgba(0, 0, 0, 0) }");
+    m_fakeContent->setFixedSize(m_animationContainer->width(),
+                                m_animationContainer->height() * 2);
+
     QHBoxLayout * mainLayout = qobject_cast<QHBoxLayout*>(layout());
     QVBoxLayout * contentLayout = new QVBoxLayout(this);
     contentLayout->addWidget(sep, 0, Qt::AlignHCenter);
-    contentLayout->addWidget(contentBg);
+    contentLayout->addWidget(m_contentBackground);
     mainLayout->addLayout(contentLayout);
 
     connect(m_calendarView, &CalendarView::currentDateChanged,
@@ -79,11 +115,21 @@ void CalendarWindow::initUI()
     connect(m_calendarView, &CalendarView::dateSelected,
             this, &CalendarWindow::handleDateSelected);
     connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::currentYearMonthChanged,
-            this, &CalendarWindow::handleCurrentYearMonthChanged);
+            this, &CalendarWindow::handleCurrentYearMonthChanged, Qt::DirectConnection);
     connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::todayButtonClicked,
             this, &CalendarWindow::handleTodayButtonClicked);
 
     setupMenu();
+}
+
+void CalendarWindow::initAnimation()
+{
+    m_scrollAnimation = new QPropertyAnimation(m_fakeContent, "pos");
+    m_scrollAnimation->setDuration(300);
+
+    connect(m_scrollAnimation, &QPropertyAnimation::finished, [this]{
+        m_animationContainer->hide();
+    });
 }
 
 void CalendarWindow::setupMenu()
@@ -106,4 +152,40 @@ void CalendarWindow::setupMenu()
             qApp->quit();
         }
     });
+}
+
+void CalendarWindow::slideMonth(bool next)
+{
+    m_animationContainer->show();
+
+    QPixmap one = getCalendarSnapshot();
+    m_calendarTitleBarWidget->setMonthIncrease(next);
+    QPixmap two = getCalendarSnapshot();
+    QPixmap target = next ? joint(one, two) : joint(two, one);
+    m_fakeContent->setPixmap(target);
+
+    m_scrollAnimation->setStartValue(QPoint(0, next ? 0 : -one.height()));
+    m_scrollAnimation->setEndValue(QPoint(0, next ? -one.height() : 0));
+
+    m_scrollAnimation->start();
+}
+
+QPixmap CalendarWindow::getCalendarSnapshot() const
+{
+    return m_calendarView->grab(m_calendarView->rect().adjusted(0, CalendarHeaderHeight, 0, 0));
+}
+
+QPixmap CalendarWindow::joint(QPixmap &top, QPixmap &bottom) const
+{
+    QPixmap target(qMax(top.width(), bottom.width()),
+                   top.height() + bottom.height());
+
+    target.fill(Qt::white);
+    QPainter painter;
+    painter.begin(&target);
+    painter.drawPixmap(0, 0, top);
+    painter.drawPixmap(0, top.height(), bottom);
+    painter.end();
+
+    return target;
 }

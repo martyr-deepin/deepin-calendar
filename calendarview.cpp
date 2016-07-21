@@ -27,15 +27,20 @@ CaLunarDayInfo *CalendarView::emptyCaLunarDayInfo = nullptr;
 
 CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
 {
-    m_DBusInter = new CalendarDBus("com.deepin.api.LunarCalendar", "/com/deepin/api/LunarCalendar", QDBusConnection::sessionBus(), this);
+    m_DBusInter = new CalendarDBus("com.deepin.api.LunarCalendar",
+                                   "/com/deepin/api/LunarCalendar",
+                                   QDBusConnection::sessionBus(), this);
     if (!queue)
         queue = new QQueue<int>;
     if (!lunarCache)
         lunarCache = new QMap<QDate, CaLunarDayInfo>;
     if (!emptyCaLunarDayInfo)
         emptyCaLunarDayInfo = new CaLunarDayInfo;
+
     m_dayNumFont.setPixelSize(20);
     m_dayLunarFont.setPixelSize(12);
+
+    setStyleSheet("QWidget { background: rgba(0, 0, 0, 0) }");
 
     QHBoxLayout *headerLayout = new QHBoxLayout;
     QLocale locale;

@@ -37,6 +37,9 @@ class CalendarTitleBarWidget:public QWidget {
 public:
     CalendarTitleBarWidget(QWidget* parent=0);
     ~CalendarTitleBarWidget();
+
+    friend class CalendarWindow;
+
 signals:
     void todayButtonClicked();
     void currentYearMonthChanged(int year, int month);
