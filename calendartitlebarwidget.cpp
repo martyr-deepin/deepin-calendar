@@ -112,7 +112,7 @@ void CalendarTitleBarWidget::setYearIncrease(bool increase) {
     } else {
         m_year-=1;
     }
-    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
+    m_yearLabel->setText(QString::number(m_year));
 
     emit currentYearMonthChanged(m_year, m_month);
 }
@@ -133,9 +133,9 @@ void CalendarTitleBarWidget::setMonthIncrease(bool increase) {
             m_month-=1;
         }
     }
+    m_yearLabel->setText(QString::number(m_year));
+    m_monthLabel->setText(QString::number(m_month));
 
-    m_yearLabel->setText(QString(tr("%1 year")).arg(m_year));
-    m_monthLabel->setText(QString(tr("%1 month").arg(m_month)));
     emit currentYearMonthChanged(m_year, m_month);
 }
 CalendarTitleBarWidget::~CalendarTitleBarWidget() {

@@ -10,6 +10,7 @@ DWIDGET_USE_NAMESPACE
 
 class CalendarWindow : public DWindow
 {
+    Q_OBJECT
 public:
     CalendarWindow();
 

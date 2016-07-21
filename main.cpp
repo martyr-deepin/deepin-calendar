@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 
     a.setTheme("light");
     a.setStyleSheet(GetStyleSheetContent());
+    a.loadTranslator();
 
     CalendarWindow cw;
     cw.show();

@@ -30,6 +30,11 @@ HEADERS  += calendarwindow.h \
 RESOURCES += \
     resources.qrc
 
+# Automating generation .qm files from .ts files
+CONFIG(release, debug|release) {
+    system($$PWD/translate_generation.sh)
+}
+
 target.path = /usr/bin/
 
 desktop_files.files = deepin-calendar.desktop
@@ -38,4 +43,7 @@ desktop_files.path = /usr/share/applications/
 icon_files.files = resources/icon/deepin-calendar.svg
 icon_files.path = /usr/share/icons/hicolor/scalable/apps/
 
-INSTALLS += target desktop_files icon_files
+qm_files.path = /usr/share/dde-calendar/translations/
+qm_files.files = translations/*.qm
+
+INSTALLS += target desktop_files icon_files qm_files
