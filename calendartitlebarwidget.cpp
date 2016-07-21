@@ -58,7 +58,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->setSpacing(0);
     m_layout->addSpacing(8);
     m_layout->addWidget(iconHolder);
-    m_layout->addSpacing(40);
+    m_layout->addSpacing(20);
     m_layout->addWidget(m_festivalLabel);
     m_layout->addStretch();
     m_layout->addWidget(m_yearLeftBtn);
