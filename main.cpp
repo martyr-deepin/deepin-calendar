@@ -23,6 +23,8 @@ QString GetStyleSheetContent() {
 int main(int argc, char *argv[])
 {
     DApplication a(argc, argv);
+    a.setApplicationName("dde-calendar");
+    a.setApplicationVersion("1.0");
     if (!a.setSingleInstance("dde-calendar")) {
         qDebug() << "there's an dde-calendar instance running.";
         QProcess::execute("dbus-send --print-reply --dest=com.deepin.dde.Calendar "
