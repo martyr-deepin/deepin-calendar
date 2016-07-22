@@ -2,9 +2,10 @@
 
 #include <QFile>
 #include <QDebug>
+#include <QDesktopWidget>
 #include <QDBusConnection>
 
-#include "dapplication.h"
+#include <dapplication.h>
 
 DWIDGET_USE_NAMESPACE
 
@@ -18,6 +19,11 @@ QString GetStyleSheetContent() {
     } else {
         return "";
     }
+}
+
+QRect PrimaryRect() {
+    QDesktopWidget *w = QApplication::desktop();
+    return w->screenGeometry(w->primaryScreen());
 }
 
 int main(int argc, char *argv[])
@@ -38,6 +44,7 @@ int main(int argc, char *argv[])
     a.loadTranslator();
 
     CalendarWindow cw;
+    cw.move(PrimaryRect().center() - cw.geometry().center());
     cw.show();
 
     QDBusConnection dbus = QDBusConnection::sessionBus();
