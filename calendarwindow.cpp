@@ -96,6 +96,7 @@ void CalendarWindow::initUI()
     m_animationContainer->setFixedSize(m_calendarView->width(),
                                        m_calendarView->height() - CalendarHeaderHeight);
     m_animationContainer->move(0, CalendarHeaderHeight);
+    m_animationContainer->hide();
 
     m_fakeContent = new QLabel(m_animationContainer);
     m_fakeContent->setStyleSheet("QLabel { background: rgba(0, 0, 0, 0) }");
