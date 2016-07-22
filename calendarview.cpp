@@ -256,6 +256,10 @@ const QString CalendarView::getLunar(int pos)
 
 const CaLunarDayInfo CalendarView::getCaLunarDayInfo(int pos) const
 {
+    if (QLocale::system().name() != "zh_CN") {
+        return CaLunarDayInfo{};
+    }
+
     const QDate date = m_days[pos];
 
     if (lunarCache->contains(date))
