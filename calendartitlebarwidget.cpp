@@ -38,9 +38,9 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
 
     m_calendarIcon = new DImageButton(iconHolder);
     m_calendarIcon->setFixedSize(iconHolder->size());
-    m_calendarIcon->setHoverPic(":/resources/icon/calendar.png");
-    m_calendarIcon->setNormalPic(":/resources/icon/calendar.png");
-    m_calendarIcon->setPressPic(":/resources/icon/calendar.png");
+    m_calendarIcon->setHoverPic(":/resources/icon/today_hover.png");
+    m_calendarIcon->setNormalPic(":/resources/icon/today_normal.png");
+    m_calendarIcon->setPressPic(":/resources/icon/today_press.png");
     m_calendarIcon->hide();
 
     m_festivalLabel = new QLabel(this);

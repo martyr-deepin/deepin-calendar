@@ -7,7 +7,9 @@
         <file>resources/icon/next_normal.png</file>
         <file>resources/icon/next_hover.png</file>
         <file>resources/icon/next_press.png</file>
-        <file>resources/icon/calendar.png</file>
+        <file>resources/icon/today_normal.png</file>
+        <file>resources/icon/today_hover.png</file>
+        <file>resources/icon/today_press.png</file>
         <file>resources/icon/deepin-calendar.svg</file>
         <file>resources/icon/deepin-calendar_48.png</file>
         <file>resources/icon/deepin-calendar_96.png</file>
