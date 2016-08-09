@@ -5,9 +5,11 @@
 #include <QDesktopWidget>
 #include <QDBusConnection>
 
-#include <dapplication.h>
+#include <DApplication>
+#include <DLog>
 
 DWIDGET_USE_NAMESPACE
+DUTIL_USE_NAMESPACE
 
 QString GetStyleSheetContent() {
     QFile file(":/resources/dde-calendar.qss");
@@ -29,6 +31,7 @@ QRect PrimaryRect() {
 int main(int argc, char *argv[])
 {
     DApplication a(argc, argv);
+    a.setOrganizationName("deepin");
     a.setApplicationName("dde-calendar");
     a.setApplicationVersion("1.0");
     if (!a.setSingleInstance("dde-calendar")) {
@@ -38,6 +41,9 @@ int main(int argc, char *argv[])
 
         return 0;
     }
+
+    DLogManager::registerConsoleAppender();
+    DLogManager::registerFileAppender();
 
     a.setTheme("light");
     a.setStyleSheet(GetStyleSheetContent());

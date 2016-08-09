@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = dde-calendar
 TEMPLATE = app
 CONFIG += link_pkgconfig c++11
-PKGCONFIG += dtkbase dtkwidget
+PKGCONFIG += dtkbase dtkwidget dtkutil
 
 SOURCES += main.cpp\
     calendarview.cpp \
