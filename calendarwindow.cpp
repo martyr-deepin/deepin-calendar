@@ -15,6 +15,7 @@ const int CalendarHeaderHeight = 60;
 CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
+    setWindowTitle(tr("Calendar"));
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     setTitlebarFixedHeight(40);
     setContentsMargins(QMargins(0, 0, 0, 0));
