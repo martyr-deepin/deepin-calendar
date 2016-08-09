@@ -36,6 +36,10 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     iconHolder->setAttribute(Qt::WA_TranslucentBackground);
     iconHolder->setFixedSize(24, 24);
 
+    m_icon = new QLabel(this);
+    m_icon->setFixedSize(24, 24);
+    m_icon->setPixmap(QPixmap(":/resources/icon/deepin-calendar_48.png").scaled(m_icon->size()));
+
     m_calendarIcon = new DImageButton(iconHolder);
     m_calendarIcon->setFixedSize(iconHolder->size());
     m_calendarIcon->setHoverPic(":/resources/icon/today_hover.png");
@@ -44,6 +48,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_calendarIcon->hide();
 
     m_festivalLabel = new QLabel(this);
+    m_festivalLabel->setFixedWidth(190);
     m_yearLabel = new QLabel(this);
     m_monthLabel = new QLabel(this);
     // Give month label a fixed width, so it won't shrink or expand
@@ -61,8 +66,10 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
     m_layout->addSpacing(8);
+    m_layout->addWidget(m_icon);
+    m_layout->addSpacing(16);
     m_layout->addWidget(iconHolder);
-    m_layout->addSpacing(20);
+    m_layout->addSpacing(10);
     m_layout->addWidget(m_festivalLabel);
     m_layout->addStretch();
     m_layout->addWidget(m_yearLeftBtn);
@@ -76,7 +83,7 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
     m_layout->addWidget(m_monthLabel);
     m_layout->addSpacing(5);
     m_layout->addWidget(m_monthRightBtn);
-    m_layout->addSpacing(240);
+    m_layout->addSpacing(260);
     setLayout(m_layout);
 
     setStyleSheet("QLabel{font-family:SourceHanSansCN-Normal;font-size:14px;}");
@@ -90,7 +97,10 @@ CalendarTitleBarWidget::CalendarTitleBarWidget(QWidget *parent)
 
 void CalendarTitleBarWidget::setFestival(const QString &festival) {
     m_festival = festival;
-    m_festivalLabel->setText(m_festival);
+
+    const QFontMetrics fm = m_festivalLabel->fontMetrics();
+    const QString edlided = fm.elidedText(m_festival, Qt::ElideRight, m_festivalLabel->width());
+    m_festivalLabel->setText(edlided);
 }
 
 void CalendarTitleBarWidget::showCalendarIcon()

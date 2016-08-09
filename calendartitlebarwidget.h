@@ -57,6 +57,7 @@ private:
     QLabel* m_festivalLabel;
     QLabel* m_yearLabel;
     QLabel* m_monthLabel;
+    QLabel* m_icon;
     DImageButton* m_calendarIcon;
 
     int m_year=2000;

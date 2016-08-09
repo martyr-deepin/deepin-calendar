@@ -72,9 +72,10 @@ void CalendarWindow::initUI()
     m_contentBackground->setStyleSheet("QFrame#CalendarBackground { "
                              "background:white;"
                              "}");
-    m_contentBackground->setFixedSize(700, 500);
+    m_contentBackground->setFixedSize(760, 500);
 
-    setFixedSize(m_contentBackground->width() + 4, m_contentBackground->height() + titlebarHeight() + 6);
+    setFixedSize(m_contentBackground->width() + 4,
+                 m_contentBackground->height() + titlebarHeight() + 6);
     setContentWidget(m_contentBackground);
 
     m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
