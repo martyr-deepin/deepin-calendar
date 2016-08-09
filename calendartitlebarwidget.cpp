@@ -1,5 +1,7 @@
 #include "calendartitlebarwidget.h"
 
+static const int MinimumYearNumber = 1900;
+
 LeftArrowButton::LeftArrowButton(QWidget *parent)
     : DImageButton(parent) {
     this->setHoverPic(":/resources/icon/previous_hover.png");
@@ -122,9 +124,9 @@ void CalendarTitleBarWidget::setCurrentYearMonth(int yearNum, int monthNum) {
 
 void CalendarTitleBarWidget::setYearIncrease(bool increase) {
     if (increase) {
-        m_year+=1;
-    } else {
-        m_year-=1;
+        m_year += 1;
+    } else if (m_year > MinimumYearNumber){
+        m_year -= 1;
     }
     m_yearLabel->setText(QString::number(m_year));
 
