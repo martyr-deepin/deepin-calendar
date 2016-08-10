@@ -103,6 +103,7 @@ void CalendarTitleBarWidget::setFestival(const QString &festival) {
     const QFontMetrics fm = m_festivalLabel->fontMetrics();
     const QString edlided = fm.elidedText(m_festival, Qt::ElideRight, m_festivalLabel->width());
     m_festivalLabel->setText(edlided);
+    m_festivalLabel->setToolTip(festival);
 }
 
 void CalendarTitleBarWidget::showCalendarIcon()
