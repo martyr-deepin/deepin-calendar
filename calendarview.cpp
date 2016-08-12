@@ -345,7 +345,7 @@ void CalendarView::paintCell(QWidget *cell)
         } else if (m_showState & ShowLunarFestivalHighlight) {
             const int tType = type & 0xff;
             if (tType & SO_NotCurrentMonth)
-                painter.setPen(tType & SO_Festival ? m_festivalLunarColor : m_notCurrentLunarColor);
+                painter.setPen(m_notCurrentLunarColor);
             else if (tType & SO_Festival)
                 painter.setPen(m_festivalLunarColor);
             else if (tType & SO_Weekends)
