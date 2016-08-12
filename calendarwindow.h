@@ -37,6 +37,7 @@ private:
 
     void initUI();
     void initAnimation();
+    void initDateChangeMonitor();
     void setupMenu();
     void slideMonth(bool next);
     QPixmap getCalendarSnapshot() const;

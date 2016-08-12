@@ -22,6 +22,7 @@ CalendarWindow::CalendarWindow() :
 
     initUI();
     initAnimation();
+    initDateChangeMonitor();
 
     new CalendarAdaptor(this);
 }
@@ -133,6 +134,22 @@ void CalendarWindow::initAnimation()
     connect(m_scrollAnimation, &QPropertyAnimation::finished, [this]{
         m_animationContainer->hide();
     });
+}
+
+void CalendarWindow::initDateChangeMonitor()
+{
+    static QDate LastCurrentDate = QDate::currentDate();
+
+    QTimer * timer = new QTimer(this);
+    timer->setInterval(1000);
+    connect(timer, &QTimer::timeout, [this] {
+        QDate currentDate = QDate::currentDate();
+        if (LastCurrentDate != currentDate) {
+            LastCurrentDate = currentDate;
+            m_calendarView->setCurrentDate(currentDate);
+        }
+    });
+    timer->start();
 }
 
 void CalendarWindow::setupMenu()
