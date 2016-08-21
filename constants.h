@@ -2,10 +2,10 @@
 #define CONSTANTS_H
 
 namespace DDECalendar {
-    static const int HeaderItemWidth = 100;
+    static const int HeaderItemWidth = 80;
     static const int HeaderItemHeight = 40;
 
-    static const int CellWidth = 100;
+    static const int CellWidth = 80;
     static const int CellHeight = 70;
 }
 

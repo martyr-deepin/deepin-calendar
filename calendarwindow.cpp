@@ -1,16 +1,28 @@
 #include "calendarwindow.h"
 #include "dbuscalendar_adaptor.h"
 #include "constants.h"
+#include "infoview.h"
 
 #include <QDate>
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QScrollArea>
+#include <QPropertyAnimation>
+#include <QWheelEvent>
+#include <QPainter>
 
 #include <DMenu>
 #include <DAboutDialog>
 
-const int CalendarHeaderHeight = 60;
+static const int CalendarHeaderHeight = 60;
+
+static const int CalendarWidth = 760;
+static const int CalendarHeight = 500;
+
+static const int InfoViewWidth = CalendarWidth - 86;
+static const int InfoViewHeight = 90;
+
+static const int ContentLeftRightPadding = 80;
 
 CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
@@ -30,15 +42,6 @@ CalendarWindow::CalendarWindow() :
 void CalendarWindow::handleTodayButtonClicked()
 {
     m_calendarView->setCurrentDate(QDate::currentDate());
-}
-
-void CalendarWindow::handleDateSelected(const QDate &date, const CaLunarDayInfo &)
-{
-    if (date == QDate::currentDate()) {
-        m_calendarTitleBarWidget->hideCalendarIcon();
-    } else {
-        m_calendarTitleBarWidget->showCalendarIcon();
-    }
 }
 
 void CalendarWindow::handleCurrentYearMonthChanged(int year, int month)
@@ -74,31 +77,35 @@ void CalendarWindow::initUI()
     m_contentBackground->setStyleSheet("QFrame#CalendarBackground { "
                              "background:white;"
                              "}");
-    m_contentBackground->setFixedSize(760, 500);
+    m_contentBackground->setFixedSize(CalendarWidth + ContentLeftRightPadding * 2,
+                                      InfoViewHeight + CalendarHeight);
 
     setFixedSize(m_contentBackground->width() + 4,
                  m_contentBackground->height() + titlebarHeight() + 6);
     setContentWidget(m_contentBackground);
 
     m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
-    m_calendarTitleBarWidget->setCurrentYearMonth(QDate::currentDate().year(),
-                                                  QDate::currentDate().month());
     setTitlebarWidget(m_calendarTitleBarWidget);
 
     // Separator between title bar and calendar content.
     QLabel * sep = new QLabel(this);
-    sep->setFixedSize(m_contentBackground->width() - 6, 1);
+    sep->setFixedSize(width() - 6, 1);
     sep->setStyleSheet("QLabel { background : rgba(0, 0, 0, 20); }");
 
-    m_calendarView = new CalendarView(m_contentBackground);
-    m_calendarView->setFixedSize(m_contentBackground->size());
+    m_infoView = new InfoView;
+    m_infoView->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
+    m_infoView->setFixedSize(InfoViewWidth, InfoViewHeight);
+
+    m_calendarView = new CalendarView;
+    m_calendarView->setFixedSize(CalendarWidth, CalendarHeight);
     m_calendarView->setCurrentDate(QDate::currentDate());
+    m_calendarView->setLunarVisible(QLocale::system().name() == "zh_CN");
 
     m_animationContainer = new QFrame(m_contentBackground);
     m_animationContainer->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
     m_animationContainer->setFixedSize(m_calendarView->width(),
                                        m_calendarView->height() - CalendarHeaderHeight);
-    m_animationContainer->move(0, CalendarHeaderHeight);
+    m_animationContainer->move(ContentLeftRightPadding, CalendarHeaderHeight + InfoViewHeight);
     m_animationContainer->hide();
 
     m_fakeContent = new QLabel(m_animationContainer);
@@ -107,21 +114,36 @@ void CalendarWindow::initUI()
                                 m_animationContainer->height() * 2);
 
     QHBoxLayout * mainLayout = qobject_cast<QHBoxLayout*>(layout());
-    QVBoxLayout * contentLayout = new QVBoxLayout(this);
+    QVBoxLayout * contentLayout = new QVBoxLayout(m_contentBackground);
+    contentLayout->setMargin(0);
+    contentLayout->setSpacing(0);
     contentLayout->addWidget(sep, 0, Qt::AlignHCenter);
-    contentLayout->addWidget(m_contentBackground);
+    contentLayout->addWidget(m_infoView, 0, Qt::AlignHCenter);
+    contentLayout->addWidget(m_calendarView, 0, Qt::AlignHCenter);
     mainLayout->addLayout(contentLayout);
 
-    connect(m_calendarView, &CalendarView::currentDateChanged,
-            m_calendarTitleBarWidget, &CalendarTitleBarWidget::setCurrentYearMonth);
-    connect(m_calendarView, &CalendarView::currentFestivalChanged,
-            m_calendarTitleBarWidget, &CalendarTitleBarWidget::setFestival);
-    connect(m_calendarView, &CalendarView::dateSelected,
-            this, &CalendarWindow::handleDateSelected);
-    connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::currentYearMonthChanged,
-            this, &CalendarWindow::handleCurrentYearMonthChanged, Qt::DirectConnection);
-    connect(m_calendarTitleBarWidget, &CalendarTitleBarWidget::todayButtonClicked,
+    connect(m_calendarView, &CalendarView::currentDateChanged, [this](int year, int month){
+        m_infoView->setYear(year);
+        m_infoView->setMonth(month);
+    });
+    connect(m_calendarView, &CalendarView::currentFestivalChanged, m_infoView, &InfoView::setFestival);
+    connect(m_calendarView, &CalendarView::dateSelected, [this](const QDate &date, const CaLunarDayInfo &){
+        m_infoView->setYear(date.year());
+        m_infoView->setMonth(date.month());
+
+//        m_infoView->setTodayButtonVisible(date != QDate::currentDate());
+    });
+    connect(m_infoView, &InfoView::todayButtonClicked,
             this, &CalendarWindow::handleTodayButtonClicked);
+
+    connect(m_infoView, &InfoView::yearChanged, [this](int year) {
+        const int month = m_infoView->month();
+        handleCurrentYearMonthChanged(year, month);
+    });
+    connect(m_infoView, &InfoView::monthChanged, [this](int month) {
+        const int year = m_infoView->year();
+        handleCurrentYearMonthChanged(year, month);
+    });
 
     setupMenu();
 }
@@ -139,6 +161,8 @@ void CalendarWindow::initAnimation()
 void CalendarWindow::initDateChangeMonitor()
 {
     static QDate LastCurrentDate = QDate::currentDate();
+    m_calendarTitleBarWidget->setTitle(LastCurrentDate.toString(Qt::SystemLocaleLongDate));
+    updateTime();
 
     QTimer * timer = new QTimer(this);
     timer->setInterval(1000);
@@ -148,6 +172,7 @@ void CalendarWindow::initDateChangeMonitor()
             LastCurrentDate = currentDate;
             m_calendarView->setCurrentDate(currentDate);
         }
+        updateTime();
     });
     timer->start();
 }
@@ -177,9 +202,10 @@ void CalendarWindow::setupMenu()
 void CalendarWindow::slideMonth(bool next)
 {
     m_animationContainer->show();
+    m_animationContainer->raise();
 
     QPixmap one = getCalendarSnapshot();
-    m_calendarTitleBarWidget->setMonthIncrease(next);
+    m_infoView->increaseMonth(next);
     QPixmap two = getCalendarSnapshot();
     QPixmap target = next ? joint(one, two) : joint(two, one);
     m_fakeContent->setPixmap(target);
@@ -208,4 +234,9 @@ QPixmap CalendarWindow::joint(QPixmap &top, QPixmap &bottom) const
     painter.end();
 
     return target;
+}
+
+void CalendarWindow::updateTime() const
+{
+    m_infoView->setTime(QDateTime::currentDateTime().toString("hh:mm"));
 }

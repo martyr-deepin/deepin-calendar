@@ -18,14 +18,18 @@ SOURCES += main.cpp\
     calendarwindow.cpp \
     calendardbus.cpp \
     calendartitlebarwidget.cpp \
-    dbuscalendar_adaptor.cpp
+    dbuscalendar_adaptor.cpp \
+    infoview.cpp \
+    spinner.cpp
 
 HEADERS  += calendarwindow.h \
     calendardbus.h \
     calendarview.h \
     calendartitlebarwidget.h \
     constants.h \
-    dbuscalendar_adaptor.h
+    dbuscalendar_adaptor.h \
+    infoview.h \
+    spinner.h
 
 RESOURCES += \
     resources.qrc

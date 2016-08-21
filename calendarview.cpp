@@ -37,7 +37,9 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     if (!emptyCaLunarDayInfo)
         emptyCaLunarDayInfo = new CaLunarDayInfo;
 
-    m_dayNumFont.setPixelSize(20);
+    m_dayNumFont.setPixelSize(22);
+    m_dayNumFont.setFamily("Source Han Sans SC");
+    m_dayNumFont.setWeight(QFont::Light);
     m_dayLunarFont.setPixelSize(12);
 
     setStyleSheet("QWidget { background: rgba(0, 0, 0, 0) }");
@@ -62,8 +64,8 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     //add separator line
     QLabel* separatorLine = new QLabel(this);
     separatorLine->setFixedHeight(1);
-    separatorLine->setFixedWidth(660);
-    separatorLine->setStyleSheet("border: 1px solid rgba(0, 0, 0, 0.1);");
+    separatorLine->setFixedWidth(720);
+    separatorLine->setStyleSheet("border: 1px solid rgba(0, 0, 0, 0.05);");
 
     QHBoxLayout* separatorLineLayout = new QHBoxLayout;
     separatorLineLayout->setMargin(0);
@@ -88,8 +90,8 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
     gridLayout->setSpacing(0);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addLayout(headerLayout);
     mainLayout->addLayout(separatorLineLayout);
+    mainLayout->addLayout(headerLayout);
     mainLayout->addLayout(gridLayout);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -228,12 +230,7 @@ bool CalendarView::eventFilter(QObject *o, QEvent *e)
 
 const QString CalendarView::getCellDayNum(int pos)
 {
-    const QString result = QString::number(m_days[pos].day());
-
-    if (m_showState & ShowLunar)
-        return result + '\n';
-    else
-        return result;
+    return QString::number(m_days[pos].day());
 }
 
 const QDate CalendarView::getCellDate(int pos)
@@ -251,15 +248,12 @@ const QString CalendarView::getLunar(int pos)
 
     if (info.mTerm.isEmpty())
         return info.mLunarDayName;
+
     return info.mTerm;
 }
 
 const CaLunarDayInfo CalendarView::getCaLunarDayInfo(int pos) const
 {
-    if (QLocale::system().name() != "zh_CN") {
-        return CaLunarDayInfo{};
-    }
-
     const QDate date = m_days[pos];
 
     if (lunarCache->contains(date))
@@ -317,6 +311,9 @@ void CalendarView::paintCell(QWidget *cell)
 
     painter.setPen(Qt::SolidLine);
 
+    const QString dayNum = getCellDayNum(pos);
+    const QString dayLunar = getLunar(pos);
+
     // draw text of day
     if (isSelectedCell) {
         painter.setPen(m_selectedTextColor);
@@ -332,8 +329,13 @@ void CalendarView::paintCell(QWidget *cell)
             painter.setPen(m_defaultTextColor);
     }
 
+    QRect test;
     painter.setFont(m_dayNumFont);
-    painter.drawText(cell->rect().adjusted(0, 0, 0, -8), Qt::AlignCenter, getCellDayNum(pos));
+    if (m_showState & ShowLunar) {
+        painter.drawText(cell->rect().adjusted(0, 0, 0, -cell->height() / 2), Qt::AlignCenter, dayNum);
+    } else {
+        painter.drawText(cell->rect(), Qt::AlignCenter, dayNum, &test);
+    }
 
     // draw text of day type
     if (m_showState & ShowLunar)
@@ -355,7 +357,7 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
-        painter.drawText(cell->rect().adjusted(0, 26, 0, 0), Qt::AlignCenter, getLunar(pos));
+        painter.drawText(cell->rect().adjusted(0, cell->height() / 4, 0, 0), Qt::AlignCenter, dayLunar);
     }
 
     painter.end();

@@ -8,6 +8,9 @@
 
 DWIDGET_USE_NAMESPACE
 
+class InfoView;
+class QPropertyAnimation;
+
 class CalendarWindow : public DWindow
 {
     Q_OBJECT
@@ -16,7 +19,6 @@ public:
 
 public slots:
     void handleTodayButtonClicked();
-    void handleDateSelected(const QDate &date, const CaLunarDayInfo &detail);
     void handleCurrentYearMonthChanged(int year, int month);
 
     void previousMonth();
@@ -26,6 +28,7 @@ protected:
     void wheelEvent(QWheelEvent *);
 
 private:
+    InfoView * m_infoView = nullptr;
     CalendarView * m_calendarView = nullptr;
     CalendarTitleBarWidget* m_calendarTitleBarWidget = nullptr;
     QFrame * m_contentBackground = nullptr;
@@ -42,6 +45,7 @@ private:
     void slideMonth(bool next);
     QPixmap getCalendarSnapshot() const;
     QPixmap joint(QPixmap & top, QPixmap & bottom) const;
+    void updateTime() const;
 };
 
 #endif // CALENDARWINDOW_H
