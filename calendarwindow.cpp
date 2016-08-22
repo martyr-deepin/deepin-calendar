@@ -101,6 +101,9 @@ void CalendarWindow::initUI()
     m_infoView->setFixedSize(InfoViewWidth, InfoViewHeight);
     m_infoView->setYearRange(MinYearValue, INT_MAX);
 
+    m_infoView->setYear(QDate::currentDate().year());
+    m_infoView->setMonth(QDate::currentDate().month());
+
     m_calendarView = new CalendarView;
     m_calendarView->setFixedSize(CalendarWidth, CalendarHeight);
     m_calendarView->setCurrentDate(QDate::currentDate());
@@ -128,16 +131,12 @@ void CalendarWindow::initUI()
     mainLayout->addLayout(contentLayout);
 
     connect(m_calendarView, &CalendarView::currentDateChanged, [this](int year, int month){
+        m_infoView->blockSignals(true);
         m_infoView->setYear(year);
         m_infoView->setMonth(month);
+        m_infoView->blockSignals(false);
     });
     connect(m_calendarView, &CalendarView::currentFestivalChanged, m_infoView, &InfoView::setFestival);
-    connect(m_calendarView, &CalendarView::dateSelected, [this](const QDate &date, const CaLunarDayInfo &){
-        m_infoView->setYear(date.year());
-        m_infoView->setMonth(date.month());
-
-//        m_infoView->setTodayButtonVisible(date != QDate::currentDate());
-    });
     connect(m_infoView, &InfoView::todayButtonClicked,
             this, &CalendarWindow::handleTodayButtonClicked);
 

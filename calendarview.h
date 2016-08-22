@@ -56,17 +56,17 @@ public:
     inline bool cellSelectable() const {return m_cellSelectable;}
 
 signals:
-    void dateSelected(const QDate &date, const CaLunarDayInfo &detail) const;
+    void dateSelected(const QDate date, const CaLunarDayInfo &detail) const;
     void currentDateChanged(const int year, const int month);
     void currentFestivalChanged(const QString &festival);
     void cellSelectableChanged(bool cellSelectable) const;
 
 public slots:
-    void setCurrentDate(const QDate &date);
+    void setCurrentDate(const QDate date);
     void setLunarVisible(bool visible);
     void setLunarFestivalHighlight(bool highlight);
     void setCellSelectable(bool selectable);
-    void handleCurrentDateChanged(const QDate &date, const CaLunarDayInfo &detail);
+    void handleCurrentDateChanged(const QDate date, const CaLunarDayInfo &detail);
 
 private:
     int getDateIndex(const QDate &date) const;
