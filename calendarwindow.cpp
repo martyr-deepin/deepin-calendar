@@ -166,7 +166,7 @@ void CalendarWindow::initAnimation()
 void CalendarWindow::initDateChangeMonitor()
 {
     static QDate LastCurrentDate = QDate::currentDate();
-    m_calendarTitleBarWidget->setTitle(LastCurrentDate.toString(Qt::SystemLocaleLongDate));
+    updateDate();
     updateTime();
 
     QTimer * timer = new QTimer(this);
@@ -175,7 +175,7 @@ void CalendarWindow::initDateChangeMonitor()
         QDate currentDate = QDate::currentDate();
         if (LastCurrentDate != currentDate) {
             LastCurrentDate = currentDate;
-            m_calendarView->setCurrentDate(currentDate);
+            updateDate();
         }
         updateTime();
     });
@@ -244,4 +244,11 @@ QPixmap CalendarWindow::joint(QPixmap &top, QPixmap &bottom) const
 void CalendarWindow::updateTime() const
 {
     m_infoView->setTime(QDateTime::currentDateTime().toString("hh:mm"));
+}
+
+void CalendarWindow::updateDate() const
+{
+    QDate currentDate = QDate::currentDate();
+    m_calendarView->setCurrentDate(currentDate);
+    m_calendarTitleBarWidget->setTitle(currentDate.toString(Qt::SystemLocaleLongDate));
 }

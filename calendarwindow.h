@@ -46,6 +46,7 @@ private:
     QPixmap getCalendarSnapshot() const;
     QPixmap joint(QPixmap & top, QPixmap & bottom) const;
     void updateTime() const;
+    void updateDate() const;
 };
 
 #endif // CALENDARWINDOW_H
