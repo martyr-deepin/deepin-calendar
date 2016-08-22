@@ -29,6 +29,7 @@ public slots:
     int month() const;
     void setYear(int year) const;
     void setMonth(int month) const;
+    void setYearRange(int min, int max) const;
 
     void increaseMonth(bool increase);
 

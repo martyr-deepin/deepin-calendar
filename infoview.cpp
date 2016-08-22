@@ -112,6 +112,11 @@ void InfoView::setMonth(int month) const
     m_monthSpinner->setValue(month);
 }
 
+void InfoView::setYearRange(int min, int max) const
+{
+    m_yearSpinner->setRange(min, max);
+}
+
 void InfoView::increaseMonth(bool increase)
 {
     int year = m_yearSpinner->value();

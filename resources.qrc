@@ -13,5 +13,7 @@
         <file>resources/icon/deepin-calendar.svg</file>
         <file>resources/icon/deepin-calendar_48.png</file>
         <file>resources/icon/deepin-calendar_96.png</file>
+        <file>resources/icon/previous_disabled.png</file>
+        <file>resources/icon/next_disabled.png</file>
     </qresource>
 </RCC>

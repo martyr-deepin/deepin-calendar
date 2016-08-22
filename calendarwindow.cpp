@@ -24,6 +24,8 @@ static const int InfoViewHeight = 90;
 
 static const int ContentLeftRightPadding = 80;
 
+static const int MinYearValue = 1900;
+
 CalendarWindow::CalendarWindow() :
     DWindow(nullptr)
 {
@@ -66,7 +68,9 @@ void CalendarWindow::wheelEvent(QWheelEvent * e)
     if (e->delta() < 0) {
         nextMonth();
     } else {
-        previousMonth();
+        if (m_infoView->year() > MinYearValue || m_infoView->month() != 1) {
+            previousMonth();
+        }
     }
 }
 
@@ -95,6 +99,7 @@ void CalendarWindow::initUI()
     m_infoView = new InfoView;
     m_infoView->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
     m_infoView->setFixedSize(InfoViewWidth, InfoViewHeight);
+    m_infoView->setYearRange(MinYearValue, INT_MAX);
 
     m_calendarView = new CalendarView;
     m_calendarView->setFixedSize(CalendarWidth, CalendarHeight);

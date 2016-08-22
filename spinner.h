@@ -32,6 +32,9 @@ private:
     int m_value = 0;
     int m_min = INT_MIN;
     int m_max = INT_MAX;
+
+    void setPrevButtonDisabled(bool disabled) const;
+    void setNextButtonDisabled(bool disabled) const;
 };
 
 #endif // SPINNER_H

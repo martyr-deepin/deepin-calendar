@@ -11,13 +11,8 @@ Spinner::Spinner(QWidget *parent) :
 {
     setFixedHeight(23);
 
-    m_prevButton->setHoverPic(":/resources/icon/previous_hover.png");
-    m_prevButton->setNormalPic(":/resources/icon/previous_normal.png");
-    m_prevButton->setPressPic(":/resources/icon/previous_press.png");
-
-    m_nextButton->setHoverPic(":/resources/icon/next_hover.png");
-    m_nextButton->setNormalPic(":/resources/icon/next_normal.png");
-    m_nextButton->setPressPic(":/resources/icon/next_press.png");
+    setPrevButtonDisabled(false);
+    setNextButtonDisabled(false);
 
     m_label->setFixedWidth(30);
     m_label->setAlignment(Qt::AlignCenter);
@@ -56,6 +51,37 @@ void Spinner::setValue(int value)
         m_value = value;
         m_label->setText(QString::number(m_value));
 
+        setPrevButtonDisabled(value <= m_min);
+        setNextButtonDisabled(value >= m_max);
+
         emit valueChanged(value);
+    }
+}
+
+void Spinner::setPrevButtonDisabled(bool disabled) const
+{
+    m_prevButton->setDisabled(disabled);
+    if (disabled) {
+        m_prevButton->setHoverPic(":/resources/icon/previous_disabled.png");
+        m_prevButton->setNormalPic(":/resources/icon/previous_disabled.png");
+        m_prevButton->setPressPic(":/resources/icon/previous_disabled.png");
+    } else {
+        m_prevButton->setHoverPic(":/resources/icon/previous_hover.png");
+        m_prevButton->setNormalPic(":/resources/icon/previous_normal.png");
+        m_prevButton->setPressPic(":/resources/icon/previous_press.png");
+    }
+}
+
+void Spinner::setNextButtonDisabled(bool disabled) const
+{
+    m_nextButton->setDisabled(disabled);
+    if (disabled) {
+        m_nextButton->setHoverPic(":/resources/icon/next_disabled.png");
+        m_nextButton->setNormalPic(":/resources/icon/next_disabled.png");
+        m_nextButton->setPressPic(":/resources/icon/next_disabled.png");
+    } else {
+        m_nextButton->setHoverPic(":/resources/icon/next_hover.png");
+        m_nextButton->setNormalPic(":/resources/icon/next_normal.png");
+        m_nextButton->setPressPic(":/resources/icon/next_press.png");
     }
 }
