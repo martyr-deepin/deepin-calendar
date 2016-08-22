@@ -332,7 +332,7 @@ void CalendarView::paintCell(QWidget *cell)
     QRect test;
     painter.setFont(m_dayNumFont);
     if (m_showState & ShowLunar) {
-        painter.drawText(cell->rect().adjusted(0, 0, 0, -cell->height() / 2), Qt::AlignCenter, dayNum);
+        painter.drawText(cell->rect().adjusted(0, 0, 0, -cell->height() / 2 + 6), Qt::AlignCenter, dayNum);
     } else {
         painter.drawText(cell->rect(), Qt::AlignCenter, dayNum, &test);
     }
@@ -357,7 +357,7 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
-        painter.drawText(cell->rect().adjusted(0, cell->height() / 4, 0, 0), Qt::AlignCenter, dayLunar);
+        painter.drawText(cell->rect().adjusted(0, cell->height() / 4 + 6, 0, 0), Qt::AlignCenter, dayLunar);
     }
 
     painter.end();
