@@ -76,18 +76,18 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
 
     // cells grid
     QGridLayout *gridLayout = new QGridLayout;
-    for (int r = 0; r != 6; ++r)
+    gridLayout->setMargin(0);
+    gridLayout->setSpacing(0);
+    for (int r = 0; r != 6; ++r) {
         for (int c = 0; c != 7; ++c) {
             QWidget *cell = new QWidget;
             cell->setFixedSize(DDECalendar::CellWidth, DDECalendar::CellHeight);
             cell->installEventFilter(this);
             cell->setFocusPolicy(Qt::ClickFocus);
-            cell->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
             gridLayout->addWidget(cell, r, c);
             m_cellList.append(cell);
         }
-    gridLayout->setMargin(0);
-    gridLayout->setSpacing(0);
+    }
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(separatorLineLayout);
@@ -292,6 +292,11 @@ void CalendarView::getDbusData() const
 
 void CalendarView::paintCell(QWidget *cell)
 {
+    const QRect rect((cell->width() - DDECalendar::CellHighlightWidth) /2,
+                     (cell->height() - DDECalendar::CellHighlightHeight) /2,
+                     DDECalendar::CellHighlightWidth,
+                     DDECalendar::CellHighlightHeight);
+
     const int pos = m_cellList.indexOf(cell);
     const int type = getDateType(m_days[pos]);
     const bool isSelectedCell = pos == m_selectedCell;
@@ -299,10 +304,12 @@ void CalendarView::paintCell(QWidget *cell)
 
     QPainter painter(cell);
 
+//    painter.drawRoundedRect(cell->rect(), 4, 4);
+
     // draw selected cell background circle
     if (isSelectedCell)
     {
-        QRect fillRect = cell->rect();
+        QRect fillRect = rect;
 
         painter.setRenderHints(QPainter::HighQualityAntialiasing);
         painter.setBrush(QBrush(m_backgroundCircleColor));
@@ -333,9 +340,9 @@ void CalendarView::paintCell(QWidget *cell)
     QRect test;
     painter.setFont(m_dayNumFont);
     if (m_showState & ShowLunar) {
-        painter.drawText(cell->rect().adjusted(0, 0, 0, -cell->height() / 2 + 6), Qt::AlignCenter, dayNum);
+        painter.drawText(rect.adjusted(0, 0, 0, -cell->height() / 2 + 6), Qt::AlignCenter, dayNum);
     } else {
-        painter.drawText(cell->rect(), Qt::AlignCenter, dayNum, &test);
+        painter.drawText(rect, Qt::AlignCenter, dayNum, &test);
     }
 
     // draw text of day type
@@ -358,7 +365,7 @@ void CalendarView::paintCell(QWidget *cell)
         }
 
         painter.setFont(m_dayLunarFont);
-        painter.drawText(cell->rect().adjusted(0, cell->height() / 4 + 6, 0, 0), Qt::AlignCenter, dayLunar);
+        painter.drawText(rect.adjusted(0, cell->height() / 4 + 6, 0, 0), Qt::AlignCenter, dayLunar);
     }
 
     painter.end();
