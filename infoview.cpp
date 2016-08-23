@@ -68,10 +68,33 @@ InfoView::InfoView(QFrame *parent) :
     mainLayout->addLayout(rightLayout);
 
     connect(m_yearSpinner, &Spinner::valueChanged, [this](int value){
-        yearChanged(value);
+        emit yearChanged(value);
     });
     connect(m_monthSpinner, &Spinner::valueChanged, [this](int value){
-        monthChanged(value);
+        if (1 <= value && value <= 12) {
+            emit monthChanged(value);
+        } else {
+            int month = value;
+            int year = m_yearSpinner->value();
+            if (value < 1) {
+                year--;
+                month = 12;
+            } else if (value > 12) {
+                year++;
+                month = 1;
+            }
+
+            m_yearSpinner->blockSignals(true);
+            m_yearSpinner->setValue(year);
+            m_yearSpinner->blockSignals(false);
+
+            m_monthSpinner->blockSignals(true);
+            m_monthSpinner->setValue(month);
+            m_monthSpinner->blockSignals(false);
+
+            emit yearChanged(year);
+            emit monthChanged(month);
+        }
     });
     connect(m_todayButton, &DLinkButton::clicked, this, &InfoView::todayButtonClicked);
 }
