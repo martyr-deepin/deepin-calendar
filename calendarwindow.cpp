@@ -107,7 +107,7 @@ void CalendarWindow::initUI()
     m_calendarView = new CalendarView;
     m_calendarView->setFixedSize(CalendarWidth, CalendarHeight);
     m_calendarView->setCurrentDate(QDate::currentDate());
-    m_calendarView->setLunarVisible(QLocale::system().name() == "zh_CN");
+    m_calendarView->setLunarVisible(QLocale::system().name().contains("zh"));
 
     m_animationContainer = new QFrame(m_contentBackground);
     m_animationContainer->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");

@@ -106,7 +106,7 @@ void InfoView::setTime(const QString &time) const
 
 void InfoView::setFestival(const QString &festival) const
 {
-    if (QLocale::system().name() == "zh_CN") {
+    if (QLocale::system().name().contains("zh")) {
         // NOTE(hualet): the extra space before festival is a trick here,
         // it ensures that the festival label is always inflated.
         m_festivalLabel->setText(" " + festival);
