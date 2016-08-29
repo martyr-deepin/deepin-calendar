@@ -50,7 +50,9 @@ void CalendarWindow::handleCurrentYearMonthChanged(int year, int month)
 {
     QDate changedDate;
     changedDate.setDate(year, month,  QDate::currentDate().day());
+    m_calendarView->blockSignals(true);
     m_calendarView->setCurrentDate(changedDate);
+    m_calendarView->blockSignals(false);
 }
 
 void CalendarWindow::previousMonth()
@@ -131,6 +133,7 @@ void CalendarWindow::initUI()
     mainLayout->addLayout(contentLayout);
 
     connect(m_calendarView, &CalendarView::currentDateChanged, [this](int year, int month){
+        qDebug() << "current date changed" << year << month;
         m_infoView->blockSignals(true);
         m_infoView->setYear(year);
         m_infoView->setMonth(month);

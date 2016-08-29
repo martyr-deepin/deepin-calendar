@@ -103,8 +103,12 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
 
 void CalendarView::handleCurrentDateChanged(const QDate date, const CaLunarDayInfo &detail) {
     Q_UNUSED(detail);
-    setCurrentDate(date);
-    this->update();
+    if (date != m_currentDate) {
+        setCurrentDate(date);
+        update();
+
+        emit currentDateChanged(date.year(), date.month());
+    }
 }
 
 int CalendarView::getDateType(const QDate &date) const
@@ -130,8 +134,9 @@ int CalendarView::getDateType(const QDate &date) const
 
 void CalendarView::setCurrentDate(const QDate date)
 {
+    qDebug() << "set current date " << date;
+
     m_currentDate = date;
-    emit currentDateChanged(date.year(), date.month());
 
     int tmpcurrentIndex = getDateIndex(m_currentDate);
     const CaLunarDayInfo info = getCaLunarDayInfo(tmpcurrentIndex);
