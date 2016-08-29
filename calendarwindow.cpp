@@ -31,7 +31,7 @@ CalendarWindow::CalendarWindow() :
 {
     setWindowTitle(tr("Calendar"));
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    setTitlebarFixedHeight(40);
+    setDecorationFlags(DWindow::ShowTitlebarSeparator);
     setContentsMargins(QMargins(0, 0, 0, 0));
 
     initUI();
@@ -102,11 +102,6 @@ void CalendarWindow::initUI()
     m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
     setTitlebarWidget(m_calendarTitleBarWidget);
 
-    // Separator between title bar and calendar content.
-    QLabel * sep = new QLabel(this);
-    sep->setFixedSize(width() - 6, 1);
-    sep->setStyleSheet("QLabel { background : rgba(0, 0, 0, 20); }");
-
     m_infoView = new InfoView;
     m_infoView->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
     m_infoView->setFixedSize(InfoViewWidth, InfoViewHeight);
@@ -136,7 +131,6 @@ void CalendarWindow::initUI()
     QVBoxLayout * contentLayout = new QVBoxLayout(m_contentBackground);
     contentLayout->setMargin(0);
     contentLayout->setSpacing(0);
-    contentLayout->addWidget(sep, 0, Qt::AlignHCenter);
     contentLayout->addWidget(m_infoView, 0, Qt::AlignHCenter);
     contentLayout->addWidget(m_calendarView, 0, Qt::AlignHCenter);
     mainLayout->addLayout(contentLayout);
