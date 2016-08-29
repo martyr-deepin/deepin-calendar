@@ -49,7 +49,16 @@ void CalendarWindow::handleTodayButtonClicked()
 void CalendarWindow::handleCurrentYearMonthChanged(int year, int month)
 {
     QDate changedDate;
-    changedDate.setDate(year, month,  QDate::currentDate().day());
+    changedDate.setDate(year, month,  1);
+
+    const uint daysInMonth = changedDate.daysInMonth();
+    const uint currentDay = QDate::currentDate().day();
+    if (currentDay > daysInMonth) {
+        changedDate = changedDate.addDays(daysInMonth - 1);
+    } else {
+        changedDate = changedDate.addDays(currentDay - 1);
+    }
+
     m_calendarView->blockSignals(true);
     m_calendarView->setCurrentDate(changedDate);
     m_calendarView->blockSignals(false);

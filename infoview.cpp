@@ -163,12 +163,10 @@ void InfoView::increaseMonth(bool increase)
 
     if (year != m_yearSpinner->value()) {
         m_yearSpinner->setValue(year);
-        emit yearChanged(year);
     }
 
     if (month != m_monthSpinner->value()) {
         m_monthSpinner->setValue(month);
-        emit monthChanged(month);
     }
 }
 
