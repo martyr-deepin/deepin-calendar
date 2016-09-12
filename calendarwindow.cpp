@@ -191,7 +191,7 @@ void CalendarWindow::setupMenu()
 {
     DMenu * menu = dbusMenu();
     DAction * aboutAction = menu->addAction(tr("About"));
-    DAction * quitAction = menu->addAction(tr("Quit"));
+    DAction * quitAction = menu->addAction(tr("Exit"));
 
     connect(menu, &DMenu::triggered, [this, aboutAction, quitAction](DAction *action){
         if (aboutAction == action) {

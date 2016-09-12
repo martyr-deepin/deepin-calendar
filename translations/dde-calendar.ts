@@ -4,33 +4,33 @@
 <context>
     <name>CalendarWindow</name>
     <message>
-        <location filename="../calendarwindow.cpp" line="183"/>
+        <location filename="../calendarwindow.cpp" line="193"/>
         <source>About</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="184"/>
-        <source>Quit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="30"/>
-        <location filename="../calendarwindow.cpp" line="188"/>
+        <location filename="../calendarwindow.cpp" line="32"/>
+        <location filename="../calendarwindow.cpp" line="198"/>
         <source>Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="191"/>
+        <location filename="../calendarwindow.cpp" line="194"/>
+        <source>Exit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calendarwindow.cpp" line="201"/>
         <source>Deepin Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="192"/>
+        <location filename="../calendarwindow.cpp" line="202"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="193"/>
+        <location filename="../calendarwindow.cpp" line="203"/>
         <source>Calendar is a date tool.</source>
         <translation type="unfinished"></translation>
     </message>
