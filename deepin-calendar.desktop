@@ -13,6 +13,3 @@ X-MultipleArgs=false
 # Translations
 Comment[zh_CN]=Deepin桌面环境的日历程序.
 Name[zh_CN]=日历
-
-X-Deepin-CreatedBy=Launcher
-X-Deepin-AppID=dde-calendar
