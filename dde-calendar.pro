@@ -37,6 +37,7 @@ RESOURCES += \
 # Automating generation .qm files from .ts files
 CONFIG(release, debug|release) {
     system($$PWD/translate_generation.sh)
+    system($$PWD/translate_desktop.sh)
 }
 
 target.path = /usr/bin/
