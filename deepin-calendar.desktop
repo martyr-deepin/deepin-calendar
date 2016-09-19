@@ -1,6 +1,6 @@
 [Desktop Entry]
 Categories=Application;Utility;Calendar;
-Comment=Calendar for Deepin OS.
+Comment=Calendar is a date tool.
 Encoding=UTF-8
 Exec=/usr/bin/dde-calendar
 Icon=deepin-calendar

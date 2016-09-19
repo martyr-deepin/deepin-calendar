@@ -5,7 +5,7 @@
         <name>desktop</name>
         <message>
             <location filename="Desktop Entry]Comment" line="0"/>
-            <source>Calendar for Deepin OS.</source>
+            <source>Calendar is a date tool.</source>
             <translation type="unfinished"/>
         </message>
         <message>
