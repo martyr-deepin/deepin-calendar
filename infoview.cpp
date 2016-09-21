@@ -111,7 +111,7 @@ void InfoView::setFestival(const QString &festival) const
         // it ensures that the festival label is always inflated.
         m_festivalLabel->setText(" " + festival);
     } else {
-        m_festivalLabel->setVisible(false);
+        m_festivalLabel->setText(" ");
     }
 }
 
