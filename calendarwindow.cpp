@@ -10,8 +10,8 @@
 #include <QPropertyAnimation>
 #include <QWheelEvent>
 #include <QPainter>
+#include <QMenu>
 
-#include <DMenu>
 #include <DAboutDialog>
 
 static const int CalendarHeaderHeight = 60;
@@ -189,19 +189,18 @@ void CalendarWindow::initDateChangeMonitor()
 
 void CalendarWindow::setupMenu()
 {
-    DMenu * menu = dbusMenu();
-    DAction * aboutAction = menu->addAction(tr("About"));
-    DAction * quitAction = menu->addAction(tr("Exit"));
+    QMenu *menu = titleBarMenu();
+    QAction * aboutAction = menu->addAction(tr("About"));
+    QAction * quitAction = menu->addAction(tr("Exit"));
 
-    connect(menu, &DMenu::triggered, [this, aboutAction, quitAction](DAction *action){
+    connect(menu, &QMenu::triggered, [this, aboutAction, quitAction](QAction *action){
         if (aboutAction == action) {
-            DAboutDialog *about = new DAboutDialog(tr("Calendar"),
-                                                   QString(":/resources/icon/deepin-calendar_48.png"),
-                                                   QString(":/resources/icon/deepin-calendar_96.png"),
-                                                   tr("Deepin Calendar"),
-                                                   tr("Version: %1").arg(qApp->applicationVersion()),
-                                                   tr("Calendar is a date tool."),
-                                                   this);
+            DAboutDialog *about = new DAboutDialog(this);
+            about->setProductName(tr("Deepin Calendar"));
+            about->setProductIcon(QPixmap(":/resources/icon/deepin-calendar_96.png"));
+            about->setVersion(tr("Version: %1").arg(qApp->applicationVersion()));
+            about->setDescription(tr("Calendar is a date tool."));
+            about->setLicense(tr("Deepin Calendar is released under GPL v3"));
             about->show();
         } else if (quitAction == action) {
             qApp->quit();

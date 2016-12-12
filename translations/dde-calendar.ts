@@ -10,7 +10,6 @@
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="32"/>
-        <location filename="../calendarwindow.cpp" line="198"/>
         <source>Calendar</source>
         <translation type="unfinished"></translation>
     </message>
@@ -20,18 +19,23 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="201"/>
+        <location filename="../calendarwindow.cpp" line="199"/>
         <source>Deepin Calendar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="202"/>
+        <location filename="../calendarwindow.cpp" line="201"/>
         <source>Version: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="203"/>
+        <location filename="../calendarwindow.cpp" line="202"/>
         <source>Calendar is a date tool.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../calendarwindow.cpp" line="203"/>
+        <source>Deepin Calendar is released under GPL v3</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
