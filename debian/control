@@ -10,5 +10,5 @@ Vcs-Git: https://github.com/linuxdeepin/dde-calendar
 Package: dde-calendar
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: <insert up to 60 chars description>
- <insert long description, indented with spaces>
+Description: Calendar software for Deepin OS
+ Calendar for Deepin Desktop Environment.
