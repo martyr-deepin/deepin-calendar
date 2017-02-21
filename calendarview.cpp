@@ -38,7 +38,6 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
         emptyCaLunarDayInfo = new CaLunarDayInfo;
 
     m_dayNumFont.setPixelSize(22);
-    m_dayNumFont.setFamily("Source Han Sans SC");
     m_dayNumFont.setWeight(QFont::Light);
     m_dayLunarFont.setPixelSize(12);
 

@@ -15,7 +15,6 @@ InfoView::InfoView(QFrame *parent) :
     m_monthSpinner(new Spinner)
 {
     QFont font = m_timeLabel->font();
-    font.setFamily("Source Han Sans SC");
     font.setWeight(QFont::Light);
     font.setPixelSize(30);
     m_timeLabel->setFont(font);

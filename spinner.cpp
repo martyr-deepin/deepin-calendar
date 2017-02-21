@@ -14,7 +14,7 @@ Spinner::Spinner(QWidget *parent) :
     setPrevButtonDisabled(false);
     setNextButtonDisabled(false);
 
-    m_label->setFixedWidth(30);
+    m_label->setFixedWidth(40);
     m_label->setAlignment(Qt::AlignCenter);
     m_label->setText(QString::number(m_value));
 
