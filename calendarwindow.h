@@ -1,17 +1,17 @@
 #ifndef CALENDARWINDOW_H
 #define CALENDARWINDOW_H
 
-#include <DWindow>
+#include <DMainWindow>
+#include <QLabel>
 
 #include "calendarview.h"
-#include "calendartitlebarwidget.h"
 
 DWIDGET_USE_NAMESPACE
 
 class InfoView;
 class QPropertyAnimation;
 
-class CalendarWindow : public DWindow
+class CalendarWindow : public DMainWindow
 {
     Q_OBJECT
 public:
@@ -27,14 +27,17 @@ public slots:
 protected:
     void wheelEvent(QWheelEvent *);
 
+protected slots:
+    void menuItemInvoked(QAction *action);
+
 private:
     InfoView * m_infoView = nullptr;
     CalendarView * m_calendarView = nullptr;
-    CalendarTitleBarWidget* m_calendarTitleBarWidget = nullptr;
     QFrame * m_contentBackground = nullptr;
 
     QFrame * m_animationContainer = nullptr;
     QLabel * m_fakeContent = nullptr;
+    QLabel * m_icon;
 
     QPropertyAnimation * m_scrollAnimation = nullptr;
 
@@ -47,6 +50,9 @@ private:
     QPixmap joint(QPixmap & top, QPixmap & bottom) const;
     void updateTime() const;
     void updateDate() const;
+
+    QAction *m_aboutAction;
+    QAction *m_exitAction;
 };
 
 #endif // CALENDARWINDOW_H

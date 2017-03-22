@@ -11,7 +11,7 @@
 #include <QWheelEvent>
 #include <QPainter>
 #include <QMenu>
-
+#include <DTitlebar>
 #include <DAboutDialog>
 
 static const int CalendarHeaderHeight = 60;
@@ -27,11 +27,8 @@ static const int ContentLeftRightPadding = 80;
 static const int MinYearValue = 1900;
 
 CalendarWindow::CalendarWindow() :
-    DWindow(nullptr)
+    DMainWindow(nullptr)
 {
-    setWindowTitle(tr("Calendar"));
-    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-    setDecorationFlags(DWindow::ShowTitlebarSeparator);
     setContentsMargins(QMargins(0, 0, 0, 0));
 
     initUI();
@@ -96,11 +93,12 @@ void CalendarWindow::initUI()
                                       InfoViewHeight + CalendarHeight);
 
     setFixedSize(m_contentBackground->width() + 4,
-                 m_contentBackground->height() + titlebarHeight() + 6);
-    setContentWidget(m_contentBackground);
+                 m_contentBackground->height() + 6);
 
-    m_calendarTitleBarWidget = new CalendarTitleBarWidget(this);
-    setTitlebarWidget(m_calendarTitleBarWidget);
+    m_icon = new QLabel(this);
+    m_icon->setFixedSize(24, 24);
+    m_icon->setPixmap(QPixmap(":/resources/icon/deepin-calendar_48.png").scaled(m_icon->size()));
+    m_icon->move(12, 8);
 
     m_infoView = new InfoView;
     m_infoView->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
@@ -127,13 +125,14 @@ void CalendarWindow::initUI()
     m_fakeContent->setFixedSize(m_animationContainer->width(),
                                 m_animationContainer->height() * 2);
 
-    QHBoxLayout * mainLayout = qobject_cast<QHBoxLayout*>(layout());
     QVBoxLayout * contentLayout = new QVBoxLayout(m_contentBackground);
     contentLayout->setMargin(0);
     contentLayout->setSpacing(0);
     contentLayout->addWidget(m_infoView, 0, Qt::AlignHCenter);
     contentLayout->addWidget(m_calendarView, 0, Qt::AlignHCenter);
-    mainLayout->addLayout(contentLayout);
+    contentLayout->addWidget(m_contentBackground);
+
+    setCentralWidget(m_contentBackground);
 
     connect(m_calendarView, &CalendarView::currentDateChanged, [this](int year, int month){
         qDebug() << "current date changed" << year << month;
@@ -189,23 +188,37 @@ void CalendarWindow::initDateChangeMonitor()
 
 void CalendarWindow::setupMenu()
 {
-    QMenu *menu = titleBarMenu();
-    QAction * aboutAction = menu->addAction(tr("About"));
-    QAction * quitAction = menu->addAction(tr("Exit"));
+    DTitlebar *titlebar = this->titleBar();
 
-    connect(menu, &QMenu::triggered, [this, aboutAction, quitAction](QAction *action){
-        if (aboutAction == action) {
-            DAboutDialog *about = new DAboutDialog(this);
-            about->setProductName(tr("Deepin Calendar"));
-            about->setProductIcon(QPixmap(":/resources/icon/deepin-calendar_96.png"));
-            about->setVersion(tr("Version: %1").arg(qApp->applicationVersion()));
-            about->setDescription(tr("Calendar is a date tool."));
-            about->setLicense(tr("Deepin Calendar is released under GPL v3"));
-            about->show();
-        } else if (quitAction == action) {
-            qApp->quit();
-        }
-    });
+    if (titlebar) {
+        titlebar->setWindowFlags(titlebar->windowFlags() & ~Qt::WindowMaximizeButtonHint);
+        titlebar->setMenu(new QMenu(titlebar));
+        titlebar->setSeparatorVisible(true);
+
+        m_aboutAction = titlebar->menu()->addAction(tr("About"));
+        m_exitAction  = titlebar->menu()->addAction(tr("Exit"));
+
+        connect(titlebar->menu(), &QMenu::triggered, this, &CalendarWindow::menuItemInvoked);
+    }
+}
+
+
+void CalendarWindow::menuItemInvoked(QAction *action)
+{
+    if (action == m_aboutAction) {
+        DAboutDialog *about = new DAboutDialog(this);
+        about->setProductName(tr("Deepin Calendar"));
+        about->setProductIcon(QPixmap(":/resources/icon/deepin-calendar_96.png"));
+        about->setVersion(tr("Version: %1").arg(qApp->applicationVersion()));
+        about->setDescription(tr("Calendar is a date tool."));
+        about->setLicense(tr("Deepin Calendar is released under GPL v3"));
+        about->show();
+        return;
+    }
+
+    if (action == m_exitAction) {
+        qApp->exit();
+    }
 }
 
 void CalendarWindow::slideMonth(bool next)
@@ -254,5 +267,8 @@ void CalendarWindow::updateDate() const
 {
     QDate currentDate = QDate::currentDate();
     m_calendarView->setCurrentDate(currentDate);
-    m_calendarTitleBarWidget->setTitle(currentDate.toString(Qt::SystemLocaleLongDate));
+    DTitlebar *titlebar = this->titleBar();
+    if (titlebar) {
+        titlebar->setTitle(currentDate.toString(Qt::SystemLocaleLongDate));
+    }
 }

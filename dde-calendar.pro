@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     calendarview.cpp \
     calendarwindow.cpp \
     calendardbus.cpp \
-    calendartitlebarwidget.cpp \
     dbuscalendar_adaptor.cpp \
     infoview.cpp \
     spinner.cpp
@@ -25,7 +24,6 @@ SOURCES += main.cpp\
 HEADERS  += calendarwindow.h \
     calendardbus.h \
     calendarview.h \
-    calendartitlebarwidget.h \
     constants.h \
     dbuscalendar_adaptor.h \
     infoview.h \
