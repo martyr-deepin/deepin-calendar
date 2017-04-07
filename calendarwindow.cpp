@@ -92,8 +92,8 @@ void CalendarWindow::initUI()
     m_contentBackground->setFixedSize(CalendarWidth + ContentLeftRightPadding * 2,
                                       InfoViewHeight + CalendarHeight);
 
-    setFixedSize(m_contentBackground->width() + 4,
-                 m_contentBackground->height() + 6);
+    setFixedSize(m_contentBackground->width(),
+                 m_contentBackground->height() + this->titleBar()->height());
 
     m_icon = new QLabel(this);
     m_icon->setFixedSize(24, 24);
