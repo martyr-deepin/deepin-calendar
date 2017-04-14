@@ -20,7 +20,7 @@
     <message>
         <location filename="../calendarwindow.cpp" line="201"/>
         <source>Deepin Calendar</source>
-        <translation>Deepin kalendaro</translation>
+        <translation>Deepin Kalendaro</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="202"/>

@@ -4,7 +4,7 @@
         <message>
             <location filename="Desktop Entry]Comment" line="0"/>
             <source>Calendar is a date tool.</source>
-            <translation>O calendario é unha ferramenta de data.</translation>
+            <translation>O calendario é unha ferramenta de datas.</translation>
         </message>
         <message>
             <location filename="Desktop Entry]Name" line="0"/>

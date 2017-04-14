@@ -4,7 +4,7 @@
         <message>
             <location filename="Desktop Entry]Comment" line="0"/>
             <source>Calendar is a date tool.</source>
-            <translation>التقويم هو أداة التاريخ .</translation>
+            <translation>التقويم هو أداة عرض التاريخ .</translation>
         </message>
         <message>
             <location filename="Desktop Entry]Name" line="0"/>

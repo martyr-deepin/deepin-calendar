@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="gl_ES" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
 <context>
     <name>CalendarWindow</name>
     <message>
         <location filename="../calendarwindow.cpp" line="193"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>Névjegy</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="32"/>
         <location filename="../calendarwindow.cpp" line="198"/>
         <source>Calendar</source>
-        <translation>Calendario</translation>
+        <translation>Naptár</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="194"/>
         <source>Exit</source>
-        <translation>Saír</translation>
+        <translation>Kilépés</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="201"/>
         <source>Deepin Calendar</source>
-        <translation>Calendario do Deepin</translation>
+        <translation>Deepin Naptár</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="202"/>
         <source>Version: %1</source>
-        <translation>Versión: %1</translation>
+        <translation>Verzió: %s</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>Calendar is a date tool.</source>
-        <translation>O calendario é unha ferramenta de datas.</translation>
+        <translation>Naptár alkalmazás</translation>
     </message>
 </context>
 <context>
@@ -38,7 +38,7 @@
     <message>
         <location filename="../infoview.cpp" line="25"/>
         <source>Today</source>
-        <translation>Hoxe</translation>
+        <translation>Ma</translation>
     </message>
 </context>
 </TS>

@@ -30,7 +30,7 @@
     <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>Calendar is a date tool.</source>
-        <translation>Calendario es un gestor de almanaque.</translation>
+        <translation>Calendario es una herramienta de gestión de fechas.</translation>
     </message>
 </context>
 <context>

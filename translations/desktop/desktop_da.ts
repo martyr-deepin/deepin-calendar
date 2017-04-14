@@ -1,16 +1,15 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="it" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
     <context>
         <name>desktop</name>
         <message>
             <location filename="Desktop Entry]Comment" line="0"/>
             <source>Calendar is a date tool.</source>
-            <translation>Calendar è un tool calendario. 
-Localizzazione italiana a cura di Carofano Massimo Antonio.</translation>
+            <translation>Kalender er et datoværktøj.</translation>
         </message>
         <message>
             <location filename="Desktop Entry]Name" line="0"/>
             <source>Deepin Calendar</source>
-            <translation>Deepin Calendar</translation>
+            <translation>Deepin kalender</translation>
         </message>
     </context>
 </TS>

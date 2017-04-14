@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="gl_ES" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ku_IQ" version="2.1">
 <context>
     <name>CalendarWindow</name>
     <message>
         <location filename="../calendarwindow.cpp" line="193"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>دەربارە</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="32"/>
         <location filename="../calendarwindow.cpp" line="198"/>
         <source>Calendar</source>
-        <translation>Calendario</translation>
+        <translation>ساڵنامە</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="194"/>
         <source>Exit</source>
-        <translation>Saír</translation>
+        <translation>دەرچوون</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="201"/>
         <source>Deepin Calendar</source>
-        <translation>Calendario do Deepin</translation>
+        <translation>ساڵنامەی Deepin</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="202"/>
         <source>Version: %1</source>
-        <translation>Versión: %1</translation>
+        <translation>وەشانی: %1</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>Calendar is a date tool.</source>
-        <translation>O calendario é unha ferramenta de datas.</translation>
+        <translation>ساڵنامە ئامرازێکی بەروارە</translation>
     </message>
 </context>
 <context>
@@ -38,7 +38,7 @@
     <message>
         <location filename="../infoview.cpp" line="25"/>
         <source>Today</source>
-        <translation>Hoxe</translation>
+        <translation>ئەمڕۆ</translation>
     </message>
 </context>
 </TS>

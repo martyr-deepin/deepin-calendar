@@ -9,7 +9,7 @@
         <message>
             <location filename="Desktop Entry]Name" line="0"/>
             <source>Deepin Calendar</source>
-            <translation>Deepin Calendar</translation>
+            <translation>Calendário </translation>
         </message>
     </context>
 </TS>

@@ -1,36 +1,36 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="gl_ES" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_TW" version="2.1">
 <context>
     <name>CalendarWindow</name>
     <message>
         <location filename="../calendarwindow.cpp" line="193"/>
         <source>About</source>
-        <translation>Sobre</translation>
+        <translation>關於</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="32"/>
         <location filename="../calendarwindow.cpp" line="198"/>
         <source>Calendar</source>
-        <translation>Calendario</translation>
+        <translation>Deepin 日曆</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="194"/>
         <source>Exit</source>
-        <translation>Saír</translation>
+        <translation>離開</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="201"/>
         <source>Deepin Calendar</source>
-        <translation>Calendario do Deepin</translation>
+        <translation>Deepin 日曆</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="202"/>
         <source>Version: %1</source>
-        <translation>Versión: %1</translation>
+        <translation>版本：%1</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>Calendar is a date tool.</source>
-        <translation>O calendario é unha ferramenta de datas.</translation>
+        <translation>Deepin 日曆是個顯示日期的工具。</translation>
     </message>
 </context>
 <context>
@@ -38,7 +38,7 @@
     <message>
         <location filename="../infoview.cpp" line="25"/>
         <source>Today</source>
-        <translation>Hoxe</translation>
+        <translation>今天</translation>
     </message>
 </context>
 </TS>
