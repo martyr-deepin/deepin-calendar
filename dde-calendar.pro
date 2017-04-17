@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     calendardbus.cpp \
     dbuscalendar_adaptor.cpp \
     infoview.cpp \
-    spinner.cpp
+    spinner.cpp \
+    weekindicator.cpp
 
 HEADERS  += calendarwindow.h \
     calendardbus.h \
@@ -27,7 +28,8 @@ HEADERS  += calendarwindow.h \
     constants.h \
     dbuscalendar_adaptor.h \
     infoview.h \
-    spinner.h
+    spinner.h \
+    weekindicator.h
 
 RESOURCES += \
     resources.qrc

@@ -3,6 +3,7 @@
 
 #include <DMainWindow>
 #include <QLabel>
+#include <QSettings>
 
 #include "calendarview.h"
 
@@ -53,6 +54,15 @@ private:
 
     QAction *m_aboutAction;
     QAction *m_exitAction;
+    QAction *m_monAction;
+    QAction *m_tueAction;
+    QAction *m_wedAction;
+    QAction *m_thuAction;
+    QAction *m_friAction;
+    QAction *m_satAction;
+    QAction *m_sunAction;
+
+    QSettings *m_settings;
 };
 
 #endif // CALENDARWINDOW_H

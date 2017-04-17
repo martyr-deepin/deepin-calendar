@@ -31,9 +31,12 @@ CalendarWindow::CalendarWindow() :
 {
     setContentsMargins(QMargins(0, 0, 0, 0));
 
+    m_settings = new QSettings;
+
     initUI();
     initAnimation();
     initDateChangeMonitor();
+
 
     new CalendarAdaptor(this);
 }
@@ -112,6 +115,8 @@ void CalendarWindow::initUI()
     m_calendarView->setFixedSize(CalendarWidth, CalendarHeight);
     m_calendarView->setCurrentDate(QDate::currentDate());
     m_calendarView->setLunarVisible(QLocale::system().name().contains("zh"));
+
+    m_calendarView->setFirstWeekday(m_settings->value("weekday").toInt());
 
     m_animationContainer = new QFrame(m_contentBackground);
     m_animationContainer->setStyleSheet("QFrame { background: rgba(0, 0, 0, 0) }");
@@ -195,6 +200,17 @@ void CalendarWindow::setupMenu()
         titlebar->setMenu(new QMenu(titlebar));
         titlebar->setSeparatorVisible(true);
 
+        QMenu *firstWeekday = titlebar->menu()->addMenu(tr("First Day of Week"));
+        QLocale locale;
+
+        m_monAction = firstWeekday->addAction(locale.dayName(1, QLocale::ShortFormat));
+        m_tueAction = firstWeekday->addAction(locale.dayName(2, QLocale::ShortFormat));
+        m_wedAction = firstWeekday->addAction(locale.dayName(3, QLocale::ShortFormat));
+        m_thuAction = firstWeekday->addAction(locale.dayName(4, QLocale::ShortFormat));
+        m_friAction = firstWeekday->addAction(locale.dayName(5, QLocale::ShortFormat));
+        m_satAction = firstWeekday->addAction(locale.dayName(6, QLocale::ShortFormat));
+        m_sunAction = firstWeekday->addAction(locale.dayName(7, QLocale::ShortFormat));
+
         m_aboutAction = titlebar->menu()->addAction(tr("About"));
         m_exitAction  = titlebar->menu()->addAction(tr("Exit"));
 
@@ -205,6 +221,50 @@ void CalendarWindow::setupMenu()
 
 void CalendarWindow::menuItemInvoked(QAction *action)
 {
+
+    if (action == m_monAction) {
+        m_calendarView->setFirstWeekday(Monday);
+        m_settings->setValue("weekday", Monday);
+        return;
+    }
+
+    if (action == m_tueAction) {
+        m_calendarView->setFirstWeekday(Tuesday);
+        m_settings->setValue("weekday", Tuesday);
+        return;
+    }
+
+    if (action == m_wedAction) {
+        m_calendarView->setFirstWeekday(Wednesday);
+        m_settings->setValue("weekday", Wednesday);
+        return;
+    }
+
+    if (action == m_thuAction) {
+        m_calendarView->setFirstWeekday(Thursday);
+        m_settings->setValue("weekday", Thursday);
+        return;
+    }
+
+    if (action == m_friAction) {
+        m_calendarView->setFirstWeekday(Friday);
+        m_settings->setValue("weekday", Friday);
+        return;
+    }
+
+    if (action == m_satAction) {
+        m_calendarView->setFirstWeekday(Saturday);
+        m_settings->setValue("weekday", Saturday);
+        return;
+    }
+
+    if (action == m_sunAction) {
+        m_calendarView->setFirstWeekday(Sunday);
+        m_settings->setValue("weekday", Sunday);
+        return;
+    }
+
+
     if (action == m_aboutAction) {
         DAboutDialog *about = new DAboutDialog(this);
         about->setProductName(tr("Deepin Calendar"));

@@ -10,8 +10,6 @@
 #include "calendarview.h"
 #include "calendardbus.h"
 
-#include "constants.h"
-
 #include <QGridLayout>
 #include <QLabel>
 #include <QPainter>
@@ -43,22 +41,7 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
 
     setStyleSheet("QWidget { background: rgba(0, 0, 0, 0) }");
 
-    QHBoxLayout *headerLayout = new QHBoxLayout;
-    QLocale locale;
-    for (int i = 0; i != 7; ++i)
-    {
-        QLabel *label = new QLabel(locale.dayName(i ? i : 7, QLocale::ShortFormat));
-        if (i == 0 || i == 6) {
-            label->setObjectName("CalendarHeaderWeekend");
-        } else {
-            label->setObjectName("CalendarHeaderWeekday");
-        }
-        label->setAlignment(Qt::AlignCenter);
-        label->setFixedSize(DDECalendar::HeaderItemWidth, DDECalendar::HeaderItemHeight);
-        headerLayout->addWidget(label);
-    }
-    headerLayout->setMargin(0);
-    headerLayout->setSpacing(0);
+    m_weekIndicator = new WeekIndicator;
 
     //add separator line
     QLabel* separatorLine = new QLabel(this);
@@ -88,9 +71,10 @@ CalendarView::CalendarView(QWidget *parent) : QWidget(parent)
         }
     }
 
+
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addLayout(separatorLineLayout);
-    mainLayout->addLayout(headerLayout);
+    mainLayout->addWidget(m_weekIndicator);
     mainLayout->addLayout(gridLayout);
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
@@ -106,6 +90,15 @@ void CalendarView::handleCurrentDateChanged(const QDate date, const CaLunarDayIn
     if (date != m_currentDate) {
         setCurrentDate(date);
     }
+}
+
+void CalendarView::setFirstWeekday(int weekday)
+{
+    m_firstWeekDay = weekday;
+
+    m_weekIndicator->setList(weekday);
+
+    updateDate();
 }
 
 int CalendarView::getDateType(const QDate &date) const
@@ -160,21 +153,7 @@ void CalendarView::setCurrentDate(const QDate date)
         emit currentFestivalChanged("");
     }
 
-    const QDate firstDay(date.year(), date.month(), 1);
-
-    const int daysOfCal = (firstDay.dayOfWeek() % 7) + date.day() - 1;
-
-    const int y = date.dayOfWeek() % 7;
-    const int x = daysOfCal / 7;
-    const int currentIndex = x * 7 + y;
-
-    for (int i(0); i != 42; ++i) {
-        m_days[i] = date.addDays(i - currentIndex);
-    }
-
-    setSelectedCell(currentIndex);
-
-    update();
+    updateDate();
 }
 
 void CalendarView::setLunarVisible(bool visible)
@@ -236,6 +215,24 @@ bool CalendarView::eventFilter(QObject *o, QEvent *e)
     }
 
     return false;
+}
+
+void CalendarView::updateDate()
+{
+    const QDate firstDay(QDate::currentDate().year(), QDate::currentDate().month(), 1);
+    const int daysOfCal = (firstDay.dayOfWeek() % 7) + QDate::currentDate().day() - 1;
+
+    const int y = (QDate::currentDate().dayOfWeek() + m_firstWeekDay) % 7;
+    const int x = daysOfCal / 7;
+    const int currentIndex = x * 7 + y;
+
+    for (int i(0); i != 42; ++i) {
+        m_days[i] = QDate::currentDate().addDays(i - currentIndex);
+    }
+
+    setSelectedCell(currentIndex);
+
+    update();
 }
 
 const QString CalendarView::getCellDayNum(int pos)

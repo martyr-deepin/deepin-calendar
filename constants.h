@@ -12,4 +12,14 @@ namespace DDECalendar {
     static const int CellHighlightHeight = 70;
 }
 
+enum Week {
+    Monday    = 6,
+    Tuesday   = 5,
+    Wednesday = 4,
+    Thursday  = 3,
+    Friday    = 2,
+    Saturday  = 1,
+    Sunday    = 0,
+};
+
 #endif // CONSTANTS_H

@@ -10,6 +10,8 @@
 #ifndef MYCALENDARWIDGET_H
 #define MYCALENDARWIDGET_H
 
+#include "weekindicator.h"
+#include "constants.h"
 #include <QWidget>
 #include <QList>
 #include <QDate>
@@ -51,7 +53,7 @@ public:
 
 public:
     explicit CalendarView(QWidget *parent = 0);
-
+    void setFirstWeekday(int weekday);
     int getDateType(const QDate &date) const;
     inline bool cellSelectable() const {return m_cellSelectable;}
 
@@ -76,6 +78,7 @@ private:
     const CaLunarDayInfo getCaLunarDayInfo(int pos) const;
     void paintCell(QWidget *cell);
     bool eventFilter(QObject *o, QEvent *e);
+    void updateDate();
 
 private slots:
     void cellClicked(QWidget *cell);
@@ -115,6 +118,9 @@ private:
     static QQueue<int> *queue;
     static QMap<QDate, CaLunarDayInfo> *lunarCache;
     static CaLunarDayInfo *emptyCaLunarDayInfo;
+
+    WeekIndicator *m_weekIndicator;
+    int m_firstWeekDay;
 };
 
 #endif // MYCALENDARWIDGET_H
