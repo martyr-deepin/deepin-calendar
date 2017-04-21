@@ -51,4 +51,6 @@ icon_files.path = /usr/share/icons/hicolor/scalable/apps/
 qm_files.path = /usr/share/dde-calendar/translations/
 qm_files.files = translations/*.qm
 
+TRANSLATIONS = translations/dde-calendar.ts
+
 INSTALLS += target desktop_files icon_files qm_files

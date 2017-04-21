@@ -219,15 +219,15 @@ bool CalendarView::eventFilter(QObject *o, QEvent *e)
 
 void CalendarView::updateDate()
 {
-    const QDate firstDay(QDate::currentDate().year(), QDate::currentDate().month(), 1);
-    const int daysOfCal = (firstDay.dayOfWeek() % 7) + QDate::currentDate().day() - 1;
+    const QDate firstDay(m_currentDate.year(), m_currentDate.month(), 1);
+    const int daysOfCal = (firstDay.dayOfWeek() % 7) + m_currentDate.day() - 1;
 
-    const int y = (QDate::currentDate().dayOfWeek() + m_firstWeekDay) % 7;
+    const int y = (m_currentDate.dayOfWeek() + m_firstWeekDay) % 7;
     const int x = daysOfCal / 7;
     const int currentIndex = x * 7 + y;
 
     for (int i(0); i != 42; ++i) {
-        m_days[i] = QDate::currentDate().addDays(i - currentIndex);
+        m_days[i] = m_currentDate.addDays(i - currentIndex);
     }
 
     setSelectedCell(currentIndex);
