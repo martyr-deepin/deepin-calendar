@@ -1,40 +1,40 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="mn" version="2.1">
 <context>
     <name>CalendarWindow</name>
     <message>
         <location filename="../calendarwindow.cpp" line="214"/>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation>Тухай</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>First Day of Week</source>
-        <translation>Premier jour de la semaine </translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="215"/>
         <source>Exit</source>
-        <translation>Arrêter</translation>
+        <translation>Гарах</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="270"/>
         <source>Deepin Calendar</source>
-        <translation>Deepin Calendrier</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="272"/>
         <source>Version: %1</source>
-        <translation>Version: %1 </translation>
+        <translation>Хувилбар %1</translation>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="273"/>
         <source>Calendar is a date tool.</source>
-        <translation>Simple calendrier.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../calendarwindow.cpp" line="274"/>
         <source>Deepin Calendar is released under GPL v3</source>
-        <translation>Deepin Calendrier est distribué sous licence GPL v3</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../infoview.cpp" line="24"/>
         <source>Today</source>
-        <translation>Aujourd&apos;hui</translation>
+        <translation>Өнөөдөр</translation>
     </message>
 </context>
 </TS>
