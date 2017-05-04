@@ -211,9 +211,6 @@ void CalendarWindow::setupMenu()
         m_satAction = firstWeekday->addAction(locale.dayName(6, QLocale::ShortFormat));
         m_sunAction = firstWeekday->addAction(locale.dayName(7, QLocale::ShortFormat));
 
-        m_aboutAction = titlebar->menu()->addAction(tr("About"));
-        m_exitAction  = titlebar->menu()->addAction(tr("Exit"));
-
         connect(titlebar->menu(), &QMenu::triggered, this, &CalendarWindow::menuItemInvoked);
     }
 }
@@ -262,22 +259,6 @@ void CalendarWindow::menuItemInvoked(QAction *action)
         m_calendarView->setFirstWeekday(Sunday);
         m_settings->setValue("weekday", Sunday);
         return;
-    }
-
-
-    if (action == m_aboutAction) {
-        DAboutDialog *about = new DAboutDialog(this);
-        about->setProductName(tr("Deepin Calendar"));
-        about->setProductIcon(QPixmap(":/resources/icon/deepin-calendar_96.png"));
-        about->setVersion(tr("Version: %1").arg(qApp->applicationVersion()));
-        about->setDescription(tr("Calendar is a date tool."));
-        about->setLicense(tr("Deepin Calendar is released under GPL v3"));
-        about->show();
-        return;
-    }
-
-    if (action == m_exitAction) {
-        qApp->exit();
     }
 }
 

@@ -35,6 +35,12 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin");
     a.setApplicationName("dde-calendar");
     a.setApplicationVersion("1.0");
+
+    // meta information that necessary to create the about dialog.
+    a.setProductName(QApplication::translate("CalendarWindow", "Deepin Calendar"));
+    a.setProductIcon(QPixmap(":/resources/icon/deepin-calendar_96.png"));
+    a.setApplicationDescription(QApplication::translate("CalendarWindow", "Calendar is a date tool."));
+
     if (!a.setSingleInstance("dde-calendar")) {
         qDebug() << "there's an dde-calendar instance running.";
         QProcess::execute("dbus-send --print-reply --dest=com.deepin.dde.Calendar "

@@ -52,8 +52,6 @@ private:
     void updateTime() const;
     void updateDate() const;
 
-    QAction *m_aboutAction;
-    QAction *m_exitAction;
     QAction *m_monAction;
     QAction *m_tueAction;
     QAction *m_wedAction;
