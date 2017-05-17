@@ -2,39 +2,19 @@
 <context>
     <name>CalendarWindow</name>
     <message>
-        <location filename="../calendarwindow.cpp" line="214"/>
-        <source>About</source>
-        <translation>حول</translation>
-    </message>
-    <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>First Day of Week</source>
-        <translation type="unfinished"/>
+        <translation>أول يوم في الأسبوع</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="215"/>
-        <source>Exit</source>
-        <translation>خروج</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="270"/>
+        <location filename="../main.cpp" line="40"/>
         <source>Deepin Calendar</source>
         <translation>تقويم ديبين</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="272"/>
-        <source>Version: %1</source>
-        <translation>اﻹصدار : %1</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="273"/>
+        <location filename="../main.cpp" line="42"/>
         <source>Calendar is a date tool.</source>
         <translation>برنانج التقويم هو أداة التاريخ .</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="274"/>
-        <source>Deepin Calendar is released under GPL v3</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

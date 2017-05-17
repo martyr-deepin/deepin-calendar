@@ -2,39 +2,19 @@
 <context>
     <name>CalendarWindow</name>
     <message>
-        <location filename="../calendarwindow.cpp" line="214"/>
-        <source>About</source>
-        <translation>Относно:</translation>
-    </message>
-    <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>First Day of Week</source>
-        <translation type="unfinished"/>
+        <translation>Първи ден от седмицата</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="215"/>
-        <source>Exit</source>
-        <translation>Изход</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="270"/>
+        <location filename="../main.cpp" line="40"/>
         <source>Deepin Calendar</source>
         <translation>Deepin календар</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="272"/>
-        <source>Version: %1</source>
-        <translation>Версия: %1</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="273"/>
+        <location filename="../main.cpp" line="42"/>
         <source>Calendar is a date tool.</source>
         <translation>Календарът е програма за срещи.</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="274"/>
-        <source>Deepin Calendar is released under GPL v3</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>

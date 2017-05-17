@@ -2,39 +2,19 @@
 <context>
     <name>CalendarWindow</name>
     <message>
-        <location filename="../calendarwindow.cpp" line="214"/>
-        <source>About</source>
-        <translation>Giới thiệu</translation>
-    </message>
-    <message>
         <location filename="../calendarwindow.cpp" line="203"/>
         <source>First Day of Week</source>
-        <translation type="unfinished"/>
+        <translation>Ngày Đầu tiên trong Tuần</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="215"/>
-        <source>Exit</source>
-        <translation>Thoát</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="270"/>
+        <location filename="../main.cpp" line="40"/>
         <source>Deepin Calendar</source>
         <translation>Lịch Deepin</translation>
     </message>
     <message>
-        <location filename="../calendarwindow.cpp" line="272"/>
-        <source>Version: %1</source>
-        <translation>Phiên bản: %1</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="273"/>
+        <location filename="../main.cpp" line="42"/>
         <source>Calendar is a date tool.</source>
         <translation>Lịch là một công cụ ngày tháng.</translation>
-    </message>
-    <message>
-        <location filename="../calendarwindow.cpp" line="274"/>
-        <source>Deepin Calendar is released under GPL v3</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
