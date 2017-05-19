@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin");
     a.setApplicationName("dde-calendar");
     a.setApplicationVersion("1.0");
+    a.loadTranslator();
 
     // meta information that necessary to create the about dialog.
     a.setProductName(QApplication::translate("CalendarWindow", "Deepin Calendar"));
