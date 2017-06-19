@@ -61,6 +61,7 @@ private:
     QAction *m_sunAction;
 
     QSettings *m_settings;
+    QSettings *m_dateSettings;
 };
 
 #endif // CALENDARWINDOW_H

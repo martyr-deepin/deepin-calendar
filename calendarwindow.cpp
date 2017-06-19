@@ -32,6 +32,7 @@ CalendarWindow::CalendarWindow() :
     setContentsMargins(QMargins(0, 0, 0, 0));
 
     m_settings = new QSettings;
+    m_dateSettings = new QSettings("deepin", "dde-dock-datetime", this);
 
     initUI();
     initAnimation();
@@ -301,7 +302,7 @@ QPixmap CalendarWindow::joint(QPixmap &top, QPixmap &bottom) const
 
 void CalendarWindow::updateTime() const
 {
-    m_infoView->setTime(QDateTime::currentDateTime().toString("hh:mm"));
+    m_infoView->setTime(QDateTime::currentDateTime().toString(m_dateSettings->value("24HourFormat", true).toBool() ? "hh:mm" : "hh:mm A"));
 }
 
 void CalendarWindow::updateDate() const
